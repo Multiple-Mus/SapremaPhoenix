@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{226C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{B65B42BD-6C54-4FC8-8814-046B7C2163A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceOwnerClient", "ResourceOwnerClient\ResourceOwnerClient.csproj", "{89293A43-D1B7-4A03-8DBB-C9A02A079DD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceOwnerClient", "ResourceOwnerClient\ResourceOwnerClient.csproj", "{89293A43-D1B7-4A03-8DBB-C9A02A079DD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SapremaClient", "SapremaClient\SapremaClient.csproj", "{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SapremaClient", "SapremaClient\SapremaClient.csproj", "{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SapremaIdentityServerASP", "SapremaIdentityServerASP\SapremaIdentityServerASP.csproj", "{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
