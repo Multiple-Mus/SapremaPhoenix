@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SapremaAPI.Controllers
 {
-    //[Produces("application/json")]
-    //[Route("api/Identity")]
-    //public class IdentityController : Controller
+    //[produces("application/json")]
+    //[route("api/identity")]
+    //public class identitycontroller : controller
     //{
     //}
 

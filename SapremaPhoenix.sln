@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SapremaIdentityServer", "SapremaIdentityServer\SapremaIdentityServer.csproj", "{0BEEF51C-978D-4692-8ACC-D0F94EB53F5C}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceOwnerClient", "Reso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SapremaClient", "SapremaClient\SapremaClient.csproj", "{ED4A4E91-F728-4397-8E5E-3FA0453A7D5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SapremaIdentityServerASP", "SapremaIdentityServerASP\SapremaIdentityServerASP.csproj", "{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SapremaIdentityServerASP", "SapremaIdentityServerASP\SapremaIdentityServerASP.csproj", "{F9F0C1DA-0DE1-450A-BACD-4C6E43547C9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
