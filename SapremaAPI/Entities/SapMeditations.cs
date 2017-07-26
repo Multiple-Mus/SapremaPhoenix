@@ -11,7 +11,7 @@ namespace SapremaAPI.Entities
             SapUserMeditations = new HashSet<SapUserMeditations>();
         }
 
-        public Guid MeditationId { get; set; }
+        public Guid? MeditationId { get; set; }
         public string MeditationName { get; set; }
         public string MeditationTheme { get; set; }
         public string MeditationCreator { get; set; }

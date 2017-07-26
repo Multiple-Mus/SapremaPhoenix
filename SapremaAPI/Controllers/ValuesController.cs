@@ -17,9 +17,8 @@ namespace SapremaAPI.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
         /// <summary>
-        /// Testing file size & serialisation time.
+        /// Testing file size and serialisation time.
         /// </summary>
         [HttpGet]
         public string TestingFileType()
@@ -48,7 +47,6 @@ namespace SapremaAPI.Controllers
             return serializedTestList;
         }
 
-        // GET api/values/id
         /// <summary>
         /// Testing database connection.
         /// </summary>
@@ -65,18 +63,21 @@ namespace SapremaAPI.Controllers
 
         // POST api/values
         [HttpPost]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public void Post([FromBody]string value)
         {
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public void Delete(int id)
         {
         }

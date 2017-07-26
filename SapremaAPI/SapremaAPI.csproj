@@ -6,12 +6,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
-    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>bin\netcoreapp1.1\netcoreapp1.1\Saprema.xml</DocumentationFile>
+    <OutputPath>bin\netcoreapp1.1\netcoreapp1.1\</OutputPath>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Content Include="wwwroot\sapremaSwagger.css" />
+    <Content Include="wwwroot\swagger\ui\custom.css" />
+    <Content Include="wwwroot\swagger\ui\index.html" />
+    <Content Include="wwwroot\swagger\ui\sapremaSwagger.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="1.2.1" />

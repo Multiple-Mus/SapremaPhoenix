@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace SapremaAPI
 {
@@ -46,8 +48,13 @@ namespace SapremaAPI
                     Title = "Saprema API",
                     Version = "v1",
                     Description = "API for Saprema, testing use only with OpenAPI to be integrated",
-                    Contact = new Contact { Name = "Seamus O'Higgins", Email = "s.o.higgins1986@gmail.com"}
+                    Contact = new Contact { Name = "Seamus O'Higgins", Email = "s.o.higgins1986@gmail.com" }
                 });
+
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "Saprema.xml");
+                c.IncludeXmlComments(xmlPath);
             });
 
             // Add framework services.
@@ -74,7 +81,9 @@ namespace SapremaAPI
             // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Saprema V1");
+                //c.DocumentTitle("Saprema API");
+                //c.InjectStylesheet("/sapremaSwagger.css");
             });
         }
     }

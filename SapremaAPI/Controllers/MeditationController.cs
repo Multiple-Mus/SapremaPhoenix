@@ -4,42 +4,83 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SapremaAPI.DAL;
+using SapremaAPI.Entities;
 
 namespace SapremaAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/meditation")]
     public class MeditationController : Controller
     {
-        // GET: api/Meditation
+        /// <summary>
+        /// Get all meditations
+        /// </summary>
+        /// <returns>List of all meditations</returns>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            var meditationList = new Get().GetAllMeditations();
+            var seralizedMeditationList = JsonConvert.SerializeObject(meditationList);
+            return seralizedMeditationList;
         }
 
-        // GET: api/Meditation/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        /// <summary>
+        /// Get single meditation
+        /// </summary>
+        /// <param name="id">Meditation Id</param>
+        /// <returns>Details of a single meditation</returns>
+        [HttpGet("{id}")]
+        public string Get(string id)
         {
-            return "value";
+            var meditation = new Get().GetSingleMeditation(id);
+            var serializedMeditation = JsonConvert.SerializeObject(meditation);
+            return serializedMeditation;
         }
-        
-        // POST: api/Meditation
+
+        /// <summary>
+        /// Get reviews for a meditation
+        /// </summary>
+        /// <param name="id">Meditation ID</param>
+        /// <returns>All reviews for a single meditation</returns>
+        [HttpGet("{id}/reviews")]
+        public string GetMeditationReviews(string id)
+        {
+            var meditationReviews = new Get().GetAllMeditationReviews(id);
+            var meditationReviewsSerialized = JsonConvert.SerializeObject(meditationReviews);
+            return meditationReviewsSerialized;
+        }
+
+        /// <summary>
+        /// Add a meditation
+        /// </summary>
+        /// <param name="value">JSON of meditation being uploaded</param>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post(string value)
         {
+            var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
+            var success = new Create().CreateMeditation(meditation);
         }
         
-        // PUT: api/Meditation/5
+        /// <summary>
+        /// Update a meditation
+        /// </summary>
+        /// <param name="value">JSON of meditation being updated</param>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(string value)
         {
+            var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
+            var success = new Update().UpdateMeditation(meditation);
         }
         
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Delete a meditation
+        /// </summary>
+        /// <param name="id">Meditation ID</param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            var success = new Delete().DeleteMeditation(id);
         }
     }
 }

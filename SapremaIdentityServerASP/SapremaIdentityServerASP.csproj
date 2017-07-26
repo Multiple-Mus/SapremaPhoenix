@@ -11,6 +11,10 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-SapremaIdentityServerASP-3f71f81d-7da5-45be-b6db-e48b56503523</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\ClassesController.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
