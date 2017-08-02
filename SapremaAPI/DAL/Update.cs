@@ -29,5 +29,81 @@ namespace SapremaAPI.DAL
 
             return true;
         }
+
+        /*
+         * Update teacher verification status
+         * */
+        public bool UpdateTeacherVerification(string id, string status)
+        {
+            if (status.Equals("true") || status.Equals("false"))
+            {
+                bool verification = Boolean.Parse(status);
+
+                using (var dbConn = new SapremaFinalContext())
+                {
+                    SapTeachers sapTeachers = dbConn.SapTeachers.Where(a => a.TeachId == id).FirstOrDefault();
+
+                    sapTeachers.Verified = verification;
+
+                    dbConn.SaveChanges();
+                };
+
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+
+        /*
+         * Update flagged item status
+         * Come back to this for error reporting
+         * */
+        public bool ResolveFlaggedItem(string itemId, string status)
+        {
+            if (status.Equals("true") || status.Equals("false"))
+            {
+                var type = new Get().GetFlagType(itemId);
+                var id = Guid.Parse(itemId);
+                bool resolution = Boolean.Parse(status);
+
+                using (var dbConn = new SapremaFinalContext())
+                {
+                    if (type.Equals("meditation"))
+                    {
+                        SapFlagMeditations sapFlagMeditations = dbConn.SapFlagMeditations.Where(a => a.FlagId == id).FirstOrDefault();
+
+                        sapFlagMeditations.FlagResolved = resolution;
+
+                        dbConn.SaveChanges();
+
+                        return true;
+                    }
+
+                    else if (type.Equals("class"))
+                    {
+                        SapFlagClasses sapFlagClasses = dbConn.SapFlagClasses.Where(a => a.FlagId == id).FirstOrDefault();
+
+                        sapFlagClasses.FlagResolved = resolution;
+
+                        dbConn.SaveChanges();
+
+                        return true;
+                    }
+
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            else
+            {
+                return false;
+            }
+        }
     }
 }

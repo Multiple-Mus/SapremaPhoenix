@@ -32,5 +32,55 @@ namespace SapremaAPI.DAL
                 return true;
             }
         }
+
+        public bool CreateFlaggedItem(FlaggedModel flaggedModel)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+
+                if (flaggedModel.FlagType.Equals("class"))
+                {
+                    SapFlagClasses classFlag = new SapFlagClasses()
+                    {
+                        FlagId = Guid.NewGuid(),
+                        ClassId = flaggedModel.ItemId,
+                        ClassReviewId = flaggedModel.ReviewId,
+                        UserId = flaggedModel.FlaggedBy,
+                        ReasonFlagged = flaggedModel.ReasonFlagged,
+                        FlagComment = flaggedModel.FlagComment,
+                        FlagResolved = false
+                    };
+
+                    dbConn.SapFlagClasses.Add(classFlag);
+                    dbConn.SaveChanges();
+
+                    return true;
+                }
+
+                else if (flaggedModel.FlagType.Equals("meditation"))
+                {
+                    SapFlagMeditations meditationFlag = new SapFlagMeditations()
+                    {
+                        FlagId = Guid.NewGuid(),
+                        MeditationId = flaggedModel.ItemId,
+                        MeditationReviewId = flaggedModel.ReviewId,
+                        UserId = flaggedModel.FlaggedBy,
+                        ReasonFlagged = flaggedModel.ReasonFlagged,
+                        FlagComment = flaggedModel.FlagComment,
+                        FlagResolved = false
+                    };
+
+                    dbConn.SapFlagMeditations.Add(meditationFlag);
+                    dbConn.SaveChanges();
+
+                    return true;
+                }
+
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace SapremaAPI.Entities
         public virtual DbSet<SapClass> SapClass { get; set; }
         public virtual DbSet<SapClassComplete> SapClassComplete { get; set; }
         public virtual DbSet<SapClassPoses> SapClassPoses { get; set; }
+        public virtual DbSet<SapFlagClasses> SapFlagClasses { get; set; }
+        public virtual DbSet<SapFlagMeditations> SapFlagMeditations { get; set; }
         public virtual DbSet<SapGroups> SapGroups { get; set; }
         public virtual DbSet<SapMeditations> SapMeditations { get; set; }
         public virtual DbSet<SapPoses> SapPoses { get; set; }
@@ -215,6 +217,80 @@ namespace SapremaAPI.Entities
                     .HasForeignKey(d => d.PoseId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Sap_ClassPoses_Sap_Poses");
+            });
+
+            modelBuilder.Entity<SapFlagClasses>(entity =>
+            {
+                entity.HasKey(e => e.FlagId)
+                    .HasName("PK_Sap_FlagClasses");
+
+                entity.ToTable("Sap_FlagClasses");
+
+                entity.Property(e => e.FlagId).ValueGeneratedNever();
+
+                entity.Property(e => e.FlagComment).IsRequired();
+
+                entity.Property(e => e.ReasonFlagged)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.SapFlagClasses)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Sap_FlagClasses_Sap_Class");
+
+                entity.HasOne(d => d.ClassReview)
+                    .WithMany(p => p.SapFlagClasses)
+                    .HasForeignKey(d => d.ClassReviewId)
+                    .HasConstraintName("FK_Sap_FlagClasses_Sap_ReviewClass");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.SapFlagClasses)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Sap_FlagClasses_AspNetUsers");
+            });
+
+            modelBuilder.Entity<SapFlagMeditations>(entity =>
+            {
+                entity.HasKey(e => e.FlagId)
+                    .HasName("PK_Sap_FlagMeditations");
+
+                entity.ToTable("Sap_FlagMeditations");
+
+                entity.Property(e => e.FlagId).ValueGeneratedNever();
+
+                entity.Property(e => e.FlagComment).IsRequired();
+
+                entity.Property(e => e.ReasonFlagged)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Meditation)
+                    .WithMany(p => p.SapFlagMeditations)
+                    .HasForeignKey(d => d.MeditationId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Sap_FlagMeditations_Sap_Meditations");
+
+                entity.HasOne(d => d.MeditationReview)
+                    .WithMany(p => p.SapFlagMeditations)
+                    .HasForeignKey(d => d.MeditationReviewId)
+                    .HasConstraintName("FK_Sap_FlagMeditations_Sap_ReviewMeditation");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.SapFlagMeditations)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Sap_FlagMeditations_AspNetUsers");
             });
 
             modelBuilder.Entity<SapGroups>(entity =>

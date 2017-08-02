@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SapremaAPI.DAL;
+using SapremaAPI.Entities;
 
 namespace SapremaAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Classes")]
+    [Route("api/classes")]
     public class ClassesController : Controller
     {
         // GET: api/Classes

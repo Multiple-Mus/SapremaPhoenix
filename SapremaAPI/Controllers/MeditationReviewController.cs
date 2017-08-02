@@ -20,9 +20,10 @@ namespace SapremaAPI.Controllers
         /// <param name="id">User ID</param>
         /// <returns>List of all meditation user has made</returns>
         [HttpGet("UserReviews/{id}", Name = "GetUserReviews")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public string GetUserReviews(string id)
         {
-            var userReviews = new Get().GetAllUserMeditationReviews(id);
+            var userReviews = new Get().GetAllUserReviews(id);
             var userReviewsSerialized = JsonConvert.SerializeObject(userReviews);
             return userReviewsSerialized;
         }
@@ -33,9 +34,6 @@ namespace SapremaAPI.Controllers
         /// <param name="id">Meditation ID</param>
         /// <returns>List of all reviews for a meditation</returns>
         [HttpGet("MeditationReviews/{id}", Name = "GetMweditationReviews")]
-        /*
-         * Ignored as moved into MeditationsController
-         * */
         [ApiExplorerSettings(IgnoreApi = true)]
         public string GetMeditationReviews(string id)
         {
@@ -53,7 +51,7 @@ namespace SapremaAPI.Controllers
         [HttpGet("{userId}/{meditationid}", Name = "GetUserReview")]
         public string Get(string userId, string meditationId)
         {
-            var meditationReview = new Get().GetSingleMeditationReview(userId, meditationId);
+            var meditationReview = new Get().GetSingleUserMeditationReview(userId, meditationId);
             var meditationReviewSerialised = JsonConvert.SerializeObject(meditationReview);
             return meditationReviewSerialised;
         }
@@ -64,12 +62,6 @@ namespace SapremaAPI.Controllers
         {
             var meditationReview = JsonConvert.DeserializeObject<SapReviewMeditation>(value);
             var success = new Create().CreateMeditationReview(meditationReview);
-        }
-        
-        // PUT: api/MeditationReview/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
         }
         
         // DELETE: api/ApiWithActions/5

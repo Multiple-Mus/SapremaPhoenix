@@ -63,7 +63,6 @@ namespace SapremaAPI.DAL
                 foreach(var record in meditationsList)
                 {
                     var meditationStars = dbConn.SapReviewMeditation.Where(a => a.MeditationId == record.MeditationId).Select(r => r.ReviewStars).DefaultIfEmpty().Average();
-
                     MeditationModel mModel = new MeditationModel()
                     {
                         MeditationName = record.MeditationName,
@@ -83,40 +82,58 @@ namespace SapremaAPI.DAL
         }
 
         /*
-         * Get all a users meditation reviews
+         * Get all a users reviews
          * */
-        public List<MeditationReviewModel> GetAllUserMeditationReviews(string userId)
+        public List<ReviewModel> GetAllUserReviews(string userId)
         {
-            List<MeditationReviewModel> mediatationsReviewModel = new List<MeditationReviewModel>();
+            List<ReviewModel> reviewModel = new List<ReviewModel>();
 
             using (var dbConn = new SapremaFinalContext())
             {
-                var reviewList = dbConn.SapReviewMeditation.Where(a => a.UserId == userId).ToList();
+                var meditationReviewList = dbConn.SapReviewMeditation.Where(a => a.UserId == userId).ToList();
 
-                foreach (var record in reviewList)
+                foreach (var record in meditationReviewList)
                 {
-                    MeditationReviewModel mModel = new MeditationReviewModel()
+                    ReviewModel mModel = new ReviewModel()
                     {
-                        MeditationReviewId = record.ReviewMeditationId,
-                        MeditationId = record.MeditationId,
+                        ReviewId = record.ReviewMeditationId,
+                        ItemId = record.MeditationId,
                         ReviewComment = record.ReviewComment,
                         ReviewStars = record.ReviewStars,
-                        userId = record.UserId
+                        userId = record.UserId,
+                        ReviewType = "meditation"
                     };
 
-                    mediatationsReviewModel.Add(mModel);
+                    reviewModel.Add(mModel);
                 }
 
-                return mediatationsReviewModel;
+                var classReviewList = dbConn.SapReviewClass.Where(b => b.UserId == userId).ToList();
+
+                foreach (var record in classReviewList)
+                {
+                    ReviewModel cModel = new ReviewModel()
+                    {
+                        ReviewId = record.ReviewClassId,
+                        ItemId = record.ClassId,
+                        ReviewComment = record.ReviewComment,
+                        ReviewStars = record.ReviewStars,
+                        userId = record.UserId,
+                        ReviewType = "class"
+                    };
+
+                    reviewModel.Add(cModel);
+                }
+
+                return reviewModel;
             }
         }
 
         /*
         * Get all reviews of a single meditation
         * */
-        public List<MeditationReviewModel> GetAllMeditationReviews(string meditationId)
+        public List<ReviewModel> GetAllMeditationReviews(string meditationId)
         {
-            List<MeditationReviewModel> meditationsReviewModel = new List<MeditationReviewModel>();
+            List<ReviewModel> meditationsReviewModel = new List<ReviewModel>();
             var id = Guid.Parse(meditationId);
 
             using (var dbConn = new SapremaFinalContext())
@@ -125,10 +142,10 @@ namespace SapremaAPI.DAL
 
                 foreach (var record in reviewList)
                 {
-                    MeditationReviewModel mModel = new MeditationReviewModel()
+                    ReviewModel mModel = new ReviewModel()
                     {
-                        MeditationReviewId = record.ReviewMeditationId,
-                        MeditationId = record.MeditationId,
+                        ReviewId = record.ReviewMeditationId,
+                        ItemId = record.MeditationId,
                         ReviewComment = record.ReviewComment,
                         ReviewStars = record.ReviewStars,
                         userId = record.UserId
@@ -144,24 +161,280 @@ namespace SapremaAPI.DAL
         /*
          * Get review of single meditation from user
          * */
-        public MeditationReviewModel GetSingleMeditationReview(string userId, string meditationId)
+        public ReviewModel GetSingleUserMeditationReview(string userId, string meditationId)
         {
             var id = Guid.Parse(meditationId);
 
             using (var dbConn = new SapremaFinalContext())
             {
                 var userMeditationReview = dbConn.SapReviewMeditation.Where(a => a.UserId == userId && a.MeditationId == id).SingleOrDefault();
-
-                var reviewReturn = new MeditationReviewModel()
+                var reviewReturn = new ReviewModel()
                 {
-                    MeditationReviewId = userMeditationReview.ReviewMeditationId,
+                    ReviewId = userMeditationReview.ReviewMeditationId,
                     userId = userMeditationReview.UserId,
-                    MeditationId = userMeditationReview.MeditationId,
+                    ItemId = userMeditationReview.MeditationId,
                     ReviewComment = userMeditationReview.ReviewComment,
                     ReviewStars = userMeditationReview.ReviewStars
                 };
 
                 return reviewReturn;
+            }
+        }
+
+        /*
+         * Gets single review from a user
+         * this method was broken up into individual sections to allow for reuse of methods
+         * */
+        public ReviewModel GetSingleUserReview(string userId, string itemId)
+        {
+            var type = new Get().GetReviewType(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                if (type.Equals("class"))
+                {
+                    var returnReview = new Get().GetSingleUserClassReview(userId, itemId);
+                    return returnReview;
+                }
+
+                else if (type.Equals("meditation"))
+                {
+                    var returnReview = new Get().GetSingleUserMeditationReview(userId, itemId);
+                    return returnReview;
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /*
+         * Get review of single class from user
+         * */
+        public ReviewModel GetSingleUserClassReview(string userId, string classId)
+        {
+            var id = Guid.Parse(classId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var userClassReview = dbConn.SapReviewClass.Where(a => a.UserId == userId && a.ClassId == id).SingleOrDefault();
+                var returnReview = new ReviewModel()
+                {
+                    ReviewId = userClassReview.ReviewClassId,
+                    userId = userClassReview.UserId,
+                    ItemId = userClassReview.ClassId,
+                    ReviewComment = userClassReview.ReviewComment,
+                    ReviewStars = userClassReview.ReviewStars
+                };
+
+                return returnReview;
+            }
+        }
+
+        /*
+         * Get all teachers for verification
+         * */
+        public List<TeacherAdminModel> GetAllTeachersAdmin()
+        {
+            List<TeacherAdminModel> teacherAdminModel = new List<TeacherAdminModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var teacherList = dbConn.SapTeachers.ToList();
+
+                foreach (var record in teacherList)
+                {
+                    TeacherAdminModel tModel = new TeacherAdminModel()
+                    {
+                        TeacherId = record.TeachId,
+                        TeacherName = record.FullName,
+                        VerifiedStatus = record.Verified
+                    };
+
+                    teacherAdminModel.Add(tModel);
+                }
+
+                return teacherAdminModel;
+            }
+        }
+
+        /*
+         * Get single flagged item
+         * Maybe have a look at the last line "return null" - try and improve on error reporting
+         * */
+        public FlaggedModel GetSingleFlaggedItem(string itemId)
+        {
+            var type = new Get().GetFlagType(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                if (type.Equals("class"))
+                {
+                    var returnFlag = new Get().GetSingleClassFlag(itemId);
+                    return returnFlag;
+                }
+
+                else if (type.Equals("meditation"))
+                {
+                    var returnFlag = new Get().GetSingleMeditationFlag(itemId);
+                    return returnFlag;
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /*
+         * Get a single flagged class
+         * */
+        public FlaggedModel GetSingleClassFlag(string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var classFlag = dbConn.SapFlagClasses.Where(a => a.FlagId == id).SingleOrDefault();
+                var flagReturn = new FlaggedModel()
+                {
+                    FlagId = classFlag.FlagId,
+                    ItemId = classFlag.ClassId,
+                    ReviewId = classFlag.ClassReviewId,
+                    FlaggedBy = classFlag.UserId,
+                    ReasonFlagged = classFlag.ReasonFlagged,
+                    FlagComment = classFlag.FlagComment,
+                    FlagType = "class",
+                    FlagResolved = classFlag.FlagResolved
+                };
+
+                return flagReturn;
+            }
+        }
+
+        /*
+         * Get a single flagged meditation
+         * */
+        public FlaggedModel GetSingleMeditationFlag(string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var meditationFlag = dbConn.SapFlagMeditations.Where(a => a.FlagId == id).SingleOrDefault();
+                var flagReturn = new FlaggedModel()
+                {
+                    FlagId = meditationFlag.FlagId,
+                    ItemId = meditationFlag.MeditationId,
+                    ReviewId = meditationFlag.MeditationReviewId,
+                    FlaggedBy = meditationFlag.UserId,
+                    ReasonFlagged = meditationFlag.ReasonFlagged,
+                    FlagComment = meditationFlag.FlagComment,
+                    FlagType = "meditation",
+                    FlagResolved = meditationFlag.FlagResolved
+                };
+
+                return flagReturn;
+            }
+        }
+
+        /*
+         * Get all flagged items
+         * */
+        public List<FlaggedListModel> GetAllFlaggedItems()
+        {
+            List<FlaggedListModel> flaggedListModel = new List<FlaggedListModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var meditationFlaggedList = dbConn.SapFlagMeditations.ToList();
+
+                foreach (var record in meditationFlaggedList)
+                {
+                    FlaggedListModel mModel = new FlaggedListModel()
+                    {
+                        FlagId = record.FlagId,
+                        ItemId = record.MeditationId,
+                        ReviewId = record.MeditationReviewId,
+                        FlagType = "meditation",
+                        FlagResolved = record.FlagResolved
+                    };
+
+                    flaggedListModel.Add(mModel);
+                }
+
+                var classFlaggedList = dbConn.SapFlagClasses.ToList();
+
+                foreach (var record in classFlaggedList)
+                {
+                    FlaggedListModel cModel = new FlaggedListModel()
+                    {
+                        FlagId = record.FlagId,
+                        ItemId = record.ClassId,
+                        ReviewId = record.ClassReviewId,
+                        FlagType = "class",
+                        FlagResolved = record.FlagResolved
+                    };
+
+                    flaggedListModel.Add(cModel);
+                }
+
+                return flaggedListModel;
+            }
+        }
+
+        /*
+         * Get the type of review, used only on this sheet for getting user reviews
+         * */
+        public string GetReviewType(string reviewId)
+        {
+            var id = Guid.Parse(reviewId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                if (dbConn.SapReviewClass.Any(a => a.ReviewClassId == id))
+                {
+                    return "class";
+                }
+
+                else if (dbConn.SapReviewMeditation.Any(a => a.ReviewMeditationId == id))
+                {
+                    return "meditation";
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /*
+         * Get type of flag, used only here for getting user flags
+         * */
+        public string GetFlagType(string flagId)
+        {
+            var id = Guid.Parse(flagId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                if (dbConn.SapFlagClasses.Any(a => a.FlagId == id))
+                {
+                    return "class";
+                }
+
+                else if (dbConn.SapFlagMeditations.Any(a => a.FlagId == id))
+                {
+                    return "meditation";
+                }
+
+                else
+                {
+                    return null;
+                }
             }
         }
     }

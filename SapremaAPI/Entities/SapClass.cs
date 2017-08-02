@@ -8,6 +8,7 @@ namespace SapremaAPI.Entities
         public SapClass()
         {
             SapClassPoses = new HashSet<SapClassPoses>();
+            SapFlagClasses = new HashSet<SapFlagClasses>();
             SapReviewClass = new HashSet<SapReviewClass>();
         }
 
@@ -23,6 +24,7 @@ namespace SapremaAPI.Entities
 
         public virtual SapClassComplete SapClassComplete { get; set; }
         public virtual ICollection<SapClassPoses> SapClassPoses { get; set; }
+        public virtual ICollection<SapFlagClasses> SapFlagClasses { get; set; }
         public virtual ICollection<SapReviewClass> SapReviewClass { get; set; }
         public virtual AspNetUsers ClassCreatedByNavigation { get; set; }
         public virtual SapGroups ClassGroup { get; set; }
