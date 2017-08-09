@@ -105,5 +105,22 @@ namespace SapremaAPI.DAL
                 return false;
             }
         }
+
+        public bool UpdateGroup(SapGroups group)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                SapGroups sapGroups = dbConn.SapGroups.Where(a => a.GroupId == group.GroupId).FirstOrDefault();
+
+                sapGroups.GroupName = group.GroupName;
+                sapGroups.GroupStatus = group.GroupStatus;
+                sapGroups.GroupDescription = group.GroupDescription;
+                sapGroups.GroupLevel = group.GroupLevel;
+
+                dbConn.SaveChanges();
+            };
+
+            return true;
+        }
     }
 }

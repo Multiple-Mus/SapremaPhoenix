@@ -37,7 +37,7 @@ namespace SapremaAPI.DAL
                 {
                     MeditationName = meditation.MeditationName,
                     MeditationImage = meditation.MeditationImage.ToString(),
-                    MeditationCreator = meditation.MeditationCreator,
+                    MeditationCreator = new Get().GetTeacherName(meditation.MeditationCreator),
                     MeditationTheme = meditation.MeditationTheme,
                     MeditationType = meditation.MeditationType,
                     MeditationId = meditation.MeditationId.ToString(),
@@ -67,7 +67,7 @@ namespace SapremaAPI.DAL
                     {
                         MeditationName = record.MeditationName,
                         MeditationImage = record.MeditationImage.ToString(),
-                        MeditationCreator = record.MeditationCreator,
+                        MeditationCreator = new Get().GetTeacherName(record.MeditationCreator),
                         MeditationTheme = record.MeditationTheme,
                         MeditationType = record.MeditationType,
                         MeditationId = record.MeditationId.ToString(),
@@ -100,7 +100,7 @@ namespace SapremaAPI.DAL
                         ItemId = record.MeditationId,
                         ReviewComment = record.ReviewComment,
                         ReviewStars = record.ReviewStars,
-                        userId = record.UserId,
+                        Username = new Get().GetUserName(record.UserId),
                         ReviewType = "meditation"
                     };
 
@@ -117,7 +117,7 @@ namespace SapremaAPI.DAL
                         ItemId = record.ClassId,
                         ReviewComment = record.ReviewComment,
                         ReviewStars = record.ReviewStars,
-                        userId = record.UserId,
+                        Username = new Get().GetUserName(record.UserId),
                         ReviewType = "class"
                     };
 
@@ -148,7 +148,7 @@ namespace SapremaAPI.DAL
                         ItemId = record.MeditationId,
                         ReviewComment = record.ReviewComment,
                         ReviewStars = record.ReviewStars,
-                        userId = record.UserId
+                        Username = new Get().GetUserName(record.UserId)
                     };
 
                     meditationsReviewModel.Add(mModel);
@@ -171,7 +171,7 @@ namespace SapremaAPI.DAL
                 var reviewReturn = new ReviewModel()
                 {
                     ReviewId = userMeditationReview.ReviewMeditationId,
-                    userId = userMeditationReview.UserId,
+                    Username = new Get().GetUserName(userMeditationReview.UserId),
                     ItemId = userMeditationReview.MeditationId,
                     ReviewComment = userMeditationReview.ReviewComment,
                     ReviewStars = userMeditationReview.ReviewStars
@@ -223,7 +223,7 @@ namespace SapremaAPI.DAL
                 var returnReview = new ReviewModel()
                 {
                     ReviewId = userClassReview.ReviewClassId,
-                    userId = userClassReview.UserId,
+                    Username = new Get().GetUserName(userClassReview.UserId),
                     ItemId = userClassReview.ClassId,
                     ReviewComment = userClassReview.ReviewComment,
                     ReviewStars = userClassReview.ReviewStars
@@ -304,7 +304,7 @@ namespace SapremaAPI.DAL
                     FlagId = classFlag.FlagId,
                     ItemId = classFlag.ClassId,
                     ReviewId = classFlag.ClassReviewId,
-                    FlaggedBy = classFlag.UserId,
+                    FlaggedBy = new Get().GetUserName(classFlag.UserId),
                     ReasonFlagged = classFlag.ReasonFlagged,
                     FlagComment = classFlag.FlagComment,
                     FlagType = "class",
@@ -330,7 +330,7 @@ namespace SapremaAPI.DAL
                     FlagId = meditationFlag.FlagId,
                     ItemId = meditationFlag.MeditationId,
                     ReviewId = meditationFlag.MeditationReviewId,
-                    FlaggedBy = meditationFlag.UserId,
+                    FlaggedBy = new Get().GetUserName(meditationFlag.UserId),
                     ReasonFlagged = meditationFlag.ReasonFlagged,
                     FlagComment = meditationFlag.FlagComment,
                     FlagType = "meditation",
@@ -387,6 +387,40 @@ namespace SapremaAPI.DAL
         }
 
         /*
+         * Get all groups a teacher has created
+         * */
+        public List<GroupModel> GetTeacherGroups(string id)
+        {
+            List<GroupModel> groupModel = new List<GroupModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var groupList = dbConn.SapGroups.Where(a => a.GroupAdmin == id).ToList();
+
+                foreach (var record in groupList)
+                {
+                    GroupModel gModel = new GroupModel()
+                    {
+                        GroupDescription = record.GroupDescription,
+                        GroupId = record.GroupId,
+                        GroupLevel = record.GroupLevel.ToString(),
+                        GroupName = record.GroupName,
+                        GroupStatus = record.GroupStatus.ToString()
+                    };
+
+                    groupModel.Add(gModel);
+                }
+
+                return groupModel;
+            }
+        }
+
+
+        /*
+         * Helper get methods below
+         * */
+
+        /*
          * Get the type of review, used only on this sheet for getting user reviews
          * */
         public string GetReviewType(string reviewId)
@@ -435,6 +469,30 @@ namespace SapremaAPI.DAL
                 {
                     return null;
                 }
+            }
+        }
+
+        /* 
+         * Get a teachers name
+         * */
+        public string GetTeacherName(string id)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var name = dbConn.SapTeachers.Where(a => a.TeachId == id).Select(b => b.FullName).FirstOrDefault();
+                return name;
+            }
+        }
+
+        /*
+         * Get a username
+         * */
+        public string GetUserName(string id)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var username = dbConn.AspNetUsers.Where(a => a.Id == id).Select(b => b.UserName).FirstOrDefault();
+                return username;
             }
         }
     }

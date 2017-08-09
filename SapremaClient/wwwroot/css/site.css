@@ -1,37 +1,57 @@
-﻿body {
+﻿/*
+   *********** Site Layout CSS ***********
+*/
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+
+.footer-flex {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center; /* Safari */
+    align-items: center;
+    align-self: flex-end;
+    -webkit-justify-content: space-between; /* Safari */
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+    color: #c8c8c8;
+    min-height: 50px;
+    background-color: #303f9f;
+    color: #cdcdcd;
+    font-weight: 300;
+    font-size: 1.2em;
+    bottom: 0;
+    width: 100%;
+    min-height: 50px;
 }
+
+#image-div {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 60px;
+}
+.main_body {
+    min-height: 100px;
+}
+
+
+.footer-flex a:link, .footer-flex a:visited, .footer-flex a:hover, .footer-flex a:active  {
+    text-decoration: none;
+    color: #ccdcdcd;
+}
+
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
 textarea {
     max-width: 280px;
-}
-
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
 }

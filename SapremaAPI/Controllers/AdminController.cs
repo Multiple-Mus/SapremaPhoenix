@@ -62,8 +62,7 @@ namespace SapremaAPI.Controllers
         /// Get a single flagged item
         /// </summary>
         /// <param name="id">Flag ID</param>
-        /// <param name="flagType">class or meditation</param>
-        /// <returns></returns>
+        /// <returns>Single flagged item</returns>
         [HttpGet("flaggeditem/{id}", Name = "GetFlaggedItem")]
         public string GetFlaggedItem(string id)
         {
@@ -92,7 +91,7 @@ namespace SapremaAPI.Controllers
         /// Add a meditation
         /// </summary>
         /// <param name="value">JSON of meditation being uploaded</param>
-        [HttpPost]
+        [HttpPost("meditation", Name = "CreateMeditation")]
         public bool CreateMeditation(string value)
         {
             var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
@@ -104,7 +103,7 @@ namespace SapremaAPI.Controllers
         /// Update a meditation
         /// </summary>
         /// <param name="value">JSON of meditation being updated</param>
-        [HttpPut("{id}")]
+        [HttpPut("meditation/{id}", Name = "UpdateMeditation")]
         public bool EditMeditation(string value)
         {
             var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
@@ -116,7 +115,7 @@ namespace SapremaAPI.Controllers
         /// Delete a meditation
         /// </summary>
         /// <param name="id">Meditation ID</param>
-        [HttpDelete("{id}")]
+        [HttpDelete("meditation/{id}", Name = "DeleteMeditation")]
         public bool DeleteMeditation(string id)
         {
             var success = new Delete().DeleteMeditation(id);

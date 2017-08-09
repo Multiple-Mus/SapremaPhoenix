@@ -33,6 +33,18 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public bool CreateGroup(SapGroups group)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                group.GroupId = Guid.NewGuid();
+                dbConn.SapGroups.Add(group);
+                dbConn.SaveChanges();
+
+                return true;
+            }
+        }
+
         public bool CreateFlaggedItem(FlaggedModel flaggedModel)
         {
             using (var dbConn = new SapremaFinalContext())
