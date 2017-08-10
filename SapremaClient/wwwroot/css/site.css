@@ -2,11 +2,180 @@
    *********** Site Layout CSS ***********
 */
 
+html,
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #3B3B3B;
+    font-weight: 300;
 }
 
+#main-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+article {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-top: 50px;
+}
+
+h1 {
+    font-size: 60px;
+    font-weight: 100;
+    text-align: center;
+}
+
+hr {
+    width: 50%;
+}
+
+/* Following code take from Bootstrap navbar colour generator available at http://work.smarchal.com/twbscolor/ */
+.navbar-default {
+    background-color: #303f9f;
+    border-color: #7986cb;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    -moz-box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    flex: 0 0 100%;
+}
+
+.navbar-default .navbar-brand {
+    color: #dcdcdc;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #cdcdcd;
+}
+
+.navbar-default .navbar-text {
+    color: #dcdcdc;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #dcdcdc;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #cdcdcd;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu {
+    background-color: #303f9f;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+    color: #dcdcdc;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+    color: #cdcdcd;
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #cdcdcd;
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #cdcdcd;
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #cdcdcd;
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #7986cb;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #7986cb;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #dcdcdc;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: #dcdcdc;
+}
+
+.navbar-default .navbar-link {
+    color: #dcdcdc;
+}
+
+.navbar-default .navbar-link:hover {
+    color: #cdcdcd;
+}
+
+#image-div {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 60px;
+    flex: 1;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    -webkit-justify-content: space-between; /* Safari */
+    justify-content: space-between;
+    -webkit-align-items: center; /* Safari */
+    align-items: center;
+}
+
+#left-buddha {
+    width: 15%;
+}
+
+#right-buddha {
+    width: 15%;
+}
+
+@media (max-width: 600px) {
+    #left-buddha {
+        display: none;
+    }
+
+    #right-buddha {
+        width: 20%;
+    }
+
+    #image-div {
+        -webkit-justify-content: flex-end; /* Safari */
+        justify-content: flex-end;
+    }
+}
 
 .footer-flex {
     display: -webkit-flex; /* Safari */
@@ -25,33 +194,199 @@ body {
     color: #cdcdcd;
     font-weight: 300;
     font-size: 1.2em;
-    bottom: 0;
+    min-height: 80px;
+    padding: 10px;
     width: 100%;
-    min-height: 50px;
 }
 
-#image-div {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-top: 60px;
-}
-.main_body {
-    min-height: 100px;
-}
-
-
-.footer-flex a:link, .footer-flex a:visited, .footer-flex a:hover, .footer-flex a:active  {
+.footer-flex a:link, .footer-flex a:visited, .footer-flex a:hover, .footer-flex a:active {
     text-decoration: none;
-    color: #ccdcdcd;
+    color: #cdcdcd;
+}
+
+@media (max-width: 350px) {
+    .footer-flex {
+        -webkit-justify-content: center; /* Safari */
+        justify-content: center;
+    }
+
+    .footer-item-left {
+        text-align: center;
+    }
+}
+
+/*
+    *********** Site controller index CSS ***********
+*/
+
+.index-container {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: center; /* Safari */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.index-item {
+    background-color: cornflowerblue;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+}
+
+/*
+    *********** Overlay CSS ***********
+*/
+
+/* Overlay CSS taken from https://www.w3schools.com/howto/howto_js_fullscreen_overlay.asp */
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    color: #fafafa;
+    /*background-color: rgb(0,0,0); /* Black fallback color */
+    /*background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 10%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #fafafa;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #c8c8c8;
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #c8c8c8;
 }
 
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+}
+
+/* Slider CSS created at http://danielstern.ca/range.css/#/ */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100px;
+    margin: 13.8px 0;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    background: #fafafa;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -14px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #fdfdfd;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    background: #fafafa;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+}
+
+input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+    background: #f7f7f7;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+}
+
+input[type=range]::-ms-fill-upper {
+    background: #fafafa;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+}
+
+input[type=range]::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+    height: 8.4px;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+    background: #fafafa;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+    background: #fdfdfd;
 }

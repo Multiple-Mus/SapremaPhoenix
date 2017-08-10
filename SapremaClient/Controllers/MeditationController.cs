@@ -12,5 +12,30 @@ namespace SapremaClient.Controllers
         {
             return View();
         }
+
+        public IActionResult BreathTimer()
+        {
+            return View();
+        }
+
+        public IActionResult Store()
+        {
+            return View();
+        }
+
+        public IActionResult UploadMeditation()
+        {
+            return View();
+        }
+
+        public IActionResult Meditations()
+        {
+            return View();
+        }
+
+        public IActionResult PlayMeditation()
+        {
+            return View();
+        }
     }
 }

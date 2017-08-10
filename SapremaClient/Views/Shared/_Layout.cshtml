@@ -21,46 +21,50 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saprema</a>
+    <div id="main-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saprema</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Yoga" asp-action="Index">Yoga</a></li>
+                        <li><a asp-area="" asp-controller="Meditation" asp-action="Index">Meditation</a></li>
+                        <li><a asp-area="" asp-controller="Social" asp-action="Index">Social</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Secure">Secure</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Yoga" asp-action="Index">Yoga</a></li>
-                    <li><a asp-area="" asp-controller="Meditation" asp-action="Index">Meditation</a></li>
-                    <li><a asp-area="" asp-controller="Social" asp-action="Index">Social</a></li> 
-                    <li><a asp-area="" asp-controller="Home" asp-action="Secure">Secure</a></li>
-                </ul>
+        </nav>
+        <article>
+            <div id="image-div">
+                <img src="~/images/leftbuddha.svg" id="left-buddha" alt="Buddha Image" />
+                <img src="~/images/rightbuddha.svg" id="right-buddha" alt="Buddha Image" />
             </div>
-        </div>
-    </nav>
-    <div style="display: flex; flex-direction: column;">
-        <div id="image-div" style="flex:1; display: flex; flex-direction: row; justify-content: space-between;">
-            <img style="width: 15%" src="~/images/leftbuddha.svg" id="left-buddha" alt="Buddha Image" />
-            <img style="width: 15%" src="~/images/rightbuddha.svg" id="right-buddha" alt="Buddha Image" />
-        </div>
-        @RenderBody()
-        <hr />
+            <div>
+                @RenderBody()
+            </div>
+        </article>
         <footer class="footer-flex">
             <div class="footer-item-left">
                 Terms &amp; Conditions | Privacy policy<br />
                 <i class="fa fa-copyright" aria-hidden="true"></i> 2017 - SapremaClient
             </div>
             <div class="footer-item-right">
-                <a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
-                <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+                <a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
             </div>
         </footer>
     </div>
+    
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
