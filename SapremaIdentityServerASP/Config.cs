@@ -29,6 +29,12 @@ namespace SapremaIdentityServerASP
             };
         }
 
+        public static void AddUser(string userName, string website, string role)
+        {
+            userName = "David";
+            website = "www.mywebsite.com";
+            role = "SuperAdmin";
+        }
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
@@ -104,7 +110,8 @@ namespace SapremaIdentityServerASP
                     Claims = new []
                     {
                         new Claim("name", "Alice"),
-                        new Claim("website", "https://alice.com")
+                        new Claim("website", "https://alice.com"),
+                        new Claim(ClaimTypes.Role, "SuperAdmin")
                     }
                 },
                 new TestUser
@@ -116,7 +123,8 @@ namespace SapremaIdentityServerASP
                     Claims = new []
                     {
                         new Claim("name", "Bob"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("website", "https://bob.com"),
+                        new Claim(ClaimTypes.Role, "SuperAdmin")
                     }
                 }
             };

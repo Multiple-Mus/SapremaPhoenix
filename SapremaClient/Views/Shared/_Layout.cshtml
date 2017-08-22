@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js" integrity="sha256-VNbX9NjQNRW+Bk02G/RO6WiTKuhncWI4Ey7LkSbE+5s=" crossorigin="anonymous"></script>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,13 +21,18 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js" integrity="sha256-VNbX9NjQNRW+Bk02G/RO6WiTKuhncWI4Ey7LkSbE+5s=" crossorigin="anonymous"></script>
+        
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <div id="main-wrapper">
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -31,15 +40,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saprema</a>
+                    <img src="~/images/logo.svg" class="nav-img" alt="Saprema Logo" /><a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Saprema</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Yoga" asp-action="Index">Yoga</a></li>
-                        <li><a asp-area="" asp-controller="Meditation" asp-action="Index">Meditation</a></li>
-                        <li><a asp-area="" asp-controller="Social" asp-action="Index">Social</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Secure">Secure</a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="menu-link"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="menu-link"><a asp-area="" asp-controller="Yoga" asp-action="Index">Yoga</a></li>
+                        <li class="menu-link"><a asp-area="" asp-controller="Meditation" asp-action="Index">Meditation</a></li>
+                        <li class="menu-link"><a asp-area="" asp-controller="Social" asp-action="Index">Social</a></li>
+                        <li class="menu-link"><a asp-area="" asp-controller="Home" asp-action="Secure">Secure</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,6 +72,24 @@
                 <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
             </div>
         </footer>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
     </div>
     
 

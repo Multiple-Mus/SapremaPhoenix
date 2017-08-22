@@ -41,5 +41,22 @@ namespace SapremaAPI.DAL
                 return true;
             }
         }
+
+        public bool DeleteGroup(string groupId)
+        {
+            var id = Guid.Parse(groupId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var group = dbConn.SapGroups.Where(a => a.GroupId == id).SingleOrDefault();
+                if (group != null)
+                {
+                    dbConn.SapGroups.Remove(group);
+                    dbConn.SaveChanges();
+                }
+
+                return true;
+            }
+        }
     }
 }

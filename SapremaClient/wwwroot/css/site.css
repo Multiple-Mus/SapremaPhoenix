@@ -2,6 +2,8 @@
    *********** Site Layout CSS ***********
 */
 
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&amp;);
+
 html,
 body {
     height: 100%;
@@ -10,6 +12,26 @@ body {
     font-family: 'Roboto', sans-serif;
     color: #3B3B3B;
     font-weight: 300;
+}
+
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:active {
+    color: inherit;
+    text-decoration: none;
 }
 
 #main-wrapper {
@@ -36,9 +58,120 @@ h1 {
     text-align: center;
 }
 
-hr {
+.heading-rule {
     width: 50%;
 }
+
+.btn {
+    background-color: #7986cb;
+    color: white;
+    font-weight: 300;
+    border: 0px;
+}
+
+.btn:hover {
+    background-color: #6372c3;
+    color: white;
+}
+
+.btn:active {
+    background-color: #6372c3;
+    color: white;
+}
+
+.list-span {
+    display: flex;
+    justify-content: space-between;
+}
+
+.error-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.error {
+    color: red;
+    font-weight: 400;
+}
+
+.search-button {
+    padding-top: 26px;
+}
+
+.success-output {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row {
+    margin: 0px;
+}
+
+.store-rating {
+    display: flex;
+    justify-content: center
+}
+
+.store-heading {
+    padding-bottom: 50px;
+}
+
+.background-overlay {
+    background: #7f7f7f;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+}
+
+.name-search {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.button-medium {
+    width: 100px;
+    height: 30px;
+}
+
+.review-link {
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+/* Taken from https://codepen.io/jamesbarnett/pen/vlpkh */
+/* Star Rating CSS */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+    border: none; 
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label {
+    color: #FFD700;
+}
+    /* hover previous stars in list */
 
 /* Following code take from Bootstrap navbar colour generator available at http://work.smarchal.com/twbscolor/ */
 .navbar-default {
@@ -137,6 +270,37 @@ hr {
     color: #cdcdcd;
 }
 
+.navbar-brand {
+    font-weight: 700;
+    font-size: 2em;
+    padding-left: 0px;
+    margin-left: 100px !important;
+    position: absolute;
+}
+
+.navLink {
+    font-weight: 300;
+    font-size: 1.5em;
+}
+
+.navbar-collapse {
+    border: 0px;
+}
+
+.menu-link {
+    color: #3B3B3B;
+    font-weight: bold;
+}
+
+.nav-img {
+    padding: 2px;
+    margin: 0px;
+    height: 100px;
+    width: auto;
+    float: left;
+    position: absolute;
+}
+
 #image-div {
     z-index: -1;
     position: fixed;
@@ -156,10 +320,14 @@ hr {
 
 #left-buddha {
     width: 15%;
+    opacity: 0.7;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
 }
 
 #right-buddha {
     width: 15%;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
 }
 
 @media (max-width: 600px) {
@@ -192,11 +360,14 @@ hr {
     min-height: 50px;
     background-color: #303f9f;
     color: #cdcdcd;
-    font-weight: 300;
-    font-size: 1.2em;
     min-height: 80px;
     padding: 10px;
     width: 100%;
+    margin-top: 50px;
+}
+
+.footer-item-right {
+    font-size: 1.2em;
 }
 
 .footer-flex a:link, .footer-flex a:visited, .footer-flex a:hover, .footer-flex a:active {
@@ -228,16 +399,26 @@ hr {
 }
 
 .index-item {
-    background-color: cornflowerblue;
     width: 300px;
-    height: 300px;
+    min-height: 300px;
     margin: 10px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: center; /* Safari */
+    justify-content: center;
+    flex-direction: column;
+}
+
+.menu-text {
+    font-weight: 100;
+    text-align: center;
+    font-size: 3.5em;
+    text-transform: uppercase;
 }
 
 /*
     *********** Overlay CSS ***********
 */
-
 /* Overlay CSS taken from https://www.w3schools.com/howto/howto_js_fullscreen_overlay.asp */
 /* The Overlay (background) */
 .overlay {
@@ -390,3 +571,20 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
     background: #fdfdfd;
 }
+
+/*
+    *********** Profile CSS ***********
+*/
+
+.profile-container {
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+/* 
+    *********** Manage Groups CSS***********
+*/
+

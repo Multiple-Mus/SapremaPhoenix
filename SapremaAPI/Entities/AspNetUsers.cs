@@ -13,6 +13,7 @@ namespace SapremaAPI.Entities
             SapClassComplete = new HashSet<SapClassComplete>();
             SapFlagClasses = new HashSet<SapFlagClasses>();
             SapFlagMeditations = new HashSet<SapFlagMeditations>();
+            SapGroups = new HashSet<SapGroups>();
             SapReviewClass = new HashSet<SapReviewClass>();
             SapReviewMeditation = new HashSet<SapReviewMeditation>();
             SapUserGroups = new HashSet<SapUserGroups>();
@@ -42,6 +43,7 @@ namespace SapremaAPI.Entities
         public virtual ICollection<SapClassComplete> SapClassComplete { get; set; }
         public virtual ICollection<SapFlagClasses> SapFlagClasses { get; set; }
         public virtual ICollection<SapFlagMeditations> SapFlagMeditations { get; set; }
+        public virtual ICollection<SapGroups> SapGroups { get; set; }
         public virtual ICollection<SapReviewClass> SapReviewClass { get; set; }
         public virtual ICollection<SapReviewMeditation> SapReviewMeditation { get; set; }
         public virtual SapTeachers SapTeachers { get; set; }

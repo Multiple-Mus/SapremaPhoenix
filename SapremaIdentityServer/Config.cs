@@ -36,6 +36,8 @@ namespace SapremaIdentityServer
                 new Client
                 {
                     ClientId = "client",
+              
+                    Claims  = new List<Claim>{ new Claim(ClaimTypes.Role, "SuperAdmin") },
 
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
@@ -102,7 +104,8 @@ namespace SapremaIdentityServer
                     Claims = new []
                     {
                         new Claim("name", "Alice"),
-                        new Claim("website", "https://alice.com")
+                        new Claim("website", "https://alice.com"),
+                        new Claim(ClaimTypes.Role, "SuperAdmin")
                     }
                 },
                 new TestUser
@@ -114,7 +117,8 @@ namespace SapremaIdentityServer
                     Claims = new []
                     {
                         new Claim("name", "Bob"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("website", "https://bob.com"),
+                        new Claim(ClaimTypes.Role, "KickAss")
                     }
                 }
             };

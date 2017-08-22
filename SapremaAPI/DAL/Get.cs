@@ -387,11 +387,34 @@ namespace SapremaAPI.DAL
         }
 
         /*
+         * Get single group
+         * */
+        public GroupModel GetSingleGroup(string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var record = dbConn.SapGroups.Where(a => a.GroupId == id).SingleOrDefault();
+                var groupReturn = new GroupModel()
+                {
+                    GroupDescription = record.GroupDescription,
+                    GroupId = record.GroupId,
+                    GroupLevel = record.GroupLevel.ToString(),
+                    GroupName = record.GroupName,
+                    GroupStatus = record.GroupStatus.ToString()
+                };
+
+                return groupReturn;
+            }
+        }
+
+        /*
          * Get all groups a teacher has created
          * */
-        public List<GroupModel> GetTeacherGroups(string id)
+        public List<UserGroupsModel> GetUserGroups(string id)
         {
-            List<GroupModel> groupModel = new List<GroupModel>();
+            List<UserGroupsModel> groupModel = new List<UserGroupsModel>();
 
             using (var dbConn = new SapremaFinalContext())
             {
@@ -399,13 +422,10 @@ namespace SapremaAPI.DAL
 
                 foreach (var record in groupList)
                 {
-                    GroupModel gModel = new GroupModel()
+                    UserGroupsModel gModel = new UserGroupsModel()
                     {
-                        GroupDescription = record.GroupDescription,
                         GroupId = record.GroupId,
-                        GroupLevel = record.GroupLevel.ToString(),
-                        GroupName = record.GroupName,
-                        GroupStatus = record.GroupStatus.ToString()
+                        GroupName = record.GroupName
                     };
 
                     groupModel.Add(gModel);

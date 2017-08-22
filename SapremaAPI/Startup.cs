@@ -36,6 +36,16 @@ namespace SapremaAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // This allows SapremaClient to use the information passed to it from the API.
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddMvcCore()
                 .AddAuthorization()
                 .AddJsonFormatters()
@@ -72,6 +82,8 @@ namespace SapremaAPI
 
                 ApiName = "api1"
             });
+
+            app.UseCors("CorsPolicy");
 
             app.UseMvc();
 

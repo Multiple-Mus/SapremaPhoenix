@@ -4,14 +4,12 @@
 }
 
 <h1>Meditation</h1>
-<hr />
+<hr class="heading-rule" />
 <div class="index-container">
-    <a asp-area="" asp-controller="Meditation" asp-action="Meditations"><div class="index-item">meditation</div></a>
-    <div class="index-item"></div>
-</div><br />
-<div class="index-container">
-    <div class="index-item"></div>
-    <a asp-area="" asp-controller="Meditation" asp-action="BreathTimer"><div class="index-item">breath</div></a>
+    <a asp-area="" asp-controller="Meditation" asp-action="Meditations"><div class="index-item"><img src="~/images/buddha.svg" /><div class="menu-text">play</div></div></a>
+    <a asp-area="" asp-controller="Meditation" asp-action="BreathTimer"><div class="index-item"><img src="~/images/buddha.svg" /><div class="menu-text">breath</div></div></a>
+    <a asp-area="" asp-controller="Meditation" asp-action="Store"><div class="index-item"><img src="~/images/buddha.svg" /><div class="menu-text">store</div></div></a>
+    <a asp-area="" asp-controller="Meditation" asp-action="UploadMeditation"><div class="index-item"><img src="~/images/buddha.svg" /><div class="menu-text">upload</div></div></a>
 </div>
 
 

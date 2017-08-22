@@ -12,5 +12,10 @@ namespace SapremaClient.Controllers
         {
             return View();
         }
+
+        public IActionResult ManageGroups()
+        {
+            return View();
+        }
     }
 }

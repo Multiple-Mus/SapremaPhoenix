@@ -20,6 +20,6 @@ namespace SapremaAPI.Entities
 
         public virtual ICollection<SapClass> SapClass { get; set; }
         public virtual ICollection<SapUserGroups> SapUserGroups { get; set; }
-        public virtual SapTeachers GroupAdminNavigation { get; set; }
+        public virtual AspNetUsers GroupAdminNavigation { get; set; }
     }
 }

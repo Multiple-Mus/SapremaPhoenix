@@ -10,7 +10,7 @@ namespace SapremaAPI.Models
         public Guid ReviewId { get; set; }
         public string Username { get; set; }
         public Guid ItemId { get; set; }
-        public decimal ReviewStars { get; set; }
+        public decimal? ReviewStars { get; set; }
         public string ReviewComment { get; set; }
         public string ReviewType { get; set; }
     }

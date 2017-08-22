@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SapremaAPI.DAL;
 using SapremaAPI.Entities;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SapremaAPI.Controllers
 {
@@ -23,6 +24,7 @@ namespace SapremaAPI.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public string GetUserReviews(string id)
         {
+            var foo = User.Claims;
             var userReviews = new Get().GetAllUserReviews(id);
             var userReviewsSerialized = JsonConvert.SerializeObject(userReviews);
             return userReviewsSerialized;

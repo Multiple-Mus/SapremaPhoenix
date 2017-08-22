@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-
-
+using Newtonsoft.Json;
+using SapremaClient.Models;
 
 namespace SapremaClient.Controllers
 {
@@ -18,6 +18,18 @@ namespace SapremaClient.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<string> GetData()
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var content = await client.GetStringAsync("http://localhost:5001/api/meditation");
+
+
+            return content;
         }
 
         [Authorize]

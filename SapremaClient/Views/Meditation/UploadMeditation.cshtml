@@ -1,0 +1,70 @@
+
+@{
+    ViewData["Title"] = "UploadMeditation";
+}
+
+<h1>Manage Meditation</h1>
+<hr class="heading-rule" />
+<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2" id="group-list">
+    <h4>Meditations</h4>
+    <div class="name-search">
+        <div>
+            <label for="MeditationName">Meditation Name</label>
+            <input type="text" class="form-control" id="MeditationName" />
+        </div>
+        <div class="search-button text-center">
+            <button class="btn btn-default button-medium" id="searchMeditations"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+        </div>
+    </div>
+    <div id="meditation-list">
+        <!--
+        *************** Code below is for AJAX
+        -->
+        <span class='list-span'>this is the meditation name<button onclick="" class="btn btn-default button-medium" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></span><hr /><br>
+    </div>
+</div>
+
+<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-0 col-lg-4 col-lg-offset-0">
+    <div class="success-output">
+        <h4>Edit Meditation</h4>
+        <div id="success-message"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="error-input">
+            <label for="MeditationName">Meditation Name</label><span class="error" id="meditation-name-error" display="none">Please enter a name!</span>
+        </div>
+        <input type="text" class="form-control" id="MeditationName" placeholder="Mediation Name" required>
+
+    </div>
+    <div class="form-group">
+        <label for="MeditationDescription">Meditation Description</label>
+        <textarea class="form-control" id="MeditationDescription" rows="3" placeholder="Meditation Description"></textarea>
+    </div>
+    <div class="form-group">
+        <div class="error-input">
+            <label for="MeditationTheme">Meditation Theme</label><span class="error" id="meditation-name-error" display="none">Please enter a theme!</span>
+        </div>
+        <input type="text" class="form-control" id="MeditationTheme" placeholder="Mediation Theme">
+    </div>
+    <div class="form-group">
+        <div class="error-input">
+            <label for="MeditationCreator">Meditation Creator</label><span class="error" id="meditation-name-error" display="none">Please enter a creator!</span>
+        </div>
+        <input type="text" class="form-control" id="MeditationCreator" placeholder="Mediation Creator">
+    </div>
+    <div class="form-group">
+        <label for="MeditationImage">Meditation Image</label>
+        <input type="file" class="form-control" id="MeditationImage" accept="image/*">
+        <div id="meidtationImageDisplay"><img src="~/images/buddha.svg" /></div>
+    </div>
+    <div class="form-group">
+        <div class="error-input">
+            <label for="MeditationAudio">Meditation Audio</label><span class="error" id="meditation-name-error" display="none">Please upload a file!</span>
+        </div>
+        <input type="file" class="form-control" id="MeditationAudio" required>
+    </div>
+    <button class="btn btn-default" id="createGroup" type="button">Create</button>
+    <button class="btn btn-default" id="updateGroup">Update</button>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" id="delete-button">Delete</button>
+</div>

@@ -13,7 +13,7 @@ namespace SapremaAPI.Entities
         public Guid ReviewClassId { get; set; }
         public string UserId { get; set; }
         public Guid ClassId { get; set; }
-        public decimal ReviewStars { get; set; }
+        public decimal? ReviewStars { get; set; }
         public string ReviewComment { get; set; }
 
         public virtual ICollection<SapFlagClasses> SapFlagClasses { get; set; }
