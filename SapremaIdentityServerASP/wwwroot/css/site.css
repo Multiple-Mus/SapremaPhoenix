@@ -1,50 +1,666 @@
-﻿body {
+﻿/*
+   *********** Site Layout CSS ***********
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&amp;);
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #3B3B3B;
+    font-weight: 300;
+}
+
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+#main-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+article {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
     padding-top: 50px;
-    padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+h1 {
+    font-size: 60px;
+    font-weight: 100;
+    text-align: center;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.heading-rule {
+    width: 50%;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.btn {
+    background-color: #7986cb;
+    color: white;
+    font-weight: 300;
+    border: 0px;
 }
 
-/* buttons and links extension to use brackets: [ click me ] */
-.btn-bracketed::before {
-    display: inline-block;
-    content: "[";
-    padding-right: 0.5em;
+    .btn:hover {
+        background-color: #6372c3;
+        color: white;
+    }
+
+    .btn:active {
+        background-color: #6372c3;
+        color: white;
+    }
+
+.list-span {
+    display: flex;
+    justify-content: space-between;
 }
 
-.btn-bracketed::after {
-    display: inline-block;
-    content: "]";
-    padding-left: 0.5em;
+.error-input {
+    display: flex;
+    justify-content: space-between;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+.error {
+    color: red;
+    font-weight: 400;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
+.search-button {
+    padding-top: 26px;
+}
+
+.sub-heading {
+    text-align: center;
+    font-weight: 100;
+}
+
+.pose {
+    padding-top: 8px;
+}
+
+.success-output {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row {
+    margin: 0px;
+}
+
+.pose-list {
+    display: flex;
+    justify-content: space-between
+}
+
+.store-rating {
+    display: flex;
+    justify-content: center
+}
+
+.store-heading {
+    padding-bottom: 50px;
+}
+
+.background-overlay {
+    background: #7f7f7f;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+}
+
+.name-search {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.button-medium {
+    width: 100px;
+    height: 30px;
+}
+
+.review-link {
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+/* Taken from https://codepen.io/jamesbarnett/pen/vlpkh */
+/* Star Rating CSS */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+    border: none;
+}
+
+    .rating > input {
         display: none;
     }
+
+    .rating > label:before {
+        margin: 5px;
+        font-size: 1.25em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+
+    .rating > label {
+        color: #ddd;
+        float: right;
+    }
+
+/* Toggle switch CSS taken from https://www.htmllion.com/css3-toggle-switch-button.html */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        display: none;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #7986cb;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #7986cb;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label {
+    color: #FFD700;
+}
+/* hover previous stars in list */
+
+/* Following code take from Bootstrap navbar colour generator available at http://work.smarchal.com/twbscolor/ */
+.navbar-default {
+    background-color: #303f9f;
+    border-color: #7986cb;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    -moz-box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    box-shadow: 4px 4px 4px 0px rgba(28,37,95,0.2);
+    flex: 0 0 100%;
+}
+
+    .navbar-default .navbar-brand {
+        color: #dcdcdc;
+    }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+            color: #cdcdcd;
+        }
+
+    .navbar-default .navbar-text {
+        color: #dcdcdc;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        color: #dcdcdc;
+    }
+
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color: #cdcdcd;
+        }
+
+    .navbar-default .navbar-nav > li > .dropdown-menu {
+        background-color: #303f9f;
+    }
+
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+            color: #dcdcdc;
+        }
+
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+                color: #cdcdcd;
+                background-color: #7986cb;
+            }
+
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+            background-color: #7986cb;
+        }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
+
+    .navbar-default .navbar-nav > .active > a,
+    .navbar-default .navbar-nav > .active > a:hover,
+    .navbar-default .navbar-nav > .active > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
+
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: #7986cb;
+    }
+
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: #7986cb;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #dcdcdc;
+        }
+
+    .navbar-default .navbar-collapse,
+    .navbar-default .navbar-form {
+        border-color: #dcdcdc;
+    }
+
+    .navbar-default .navbar-link {
+        color: #dcdcdc;
+    }
+
+        .navbar-default .navbar-link:hover {
+            color: #cdcdcd;
+        }
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 2em;
+    padding-left: 0px;
+    margin-left: 100px !important;
+    position: absolute;
+}
+
+.navLink {
+    font-weight: 300;
+    font-size: 1.5em;
+}
+
+.navbar-collapse {
+    border: 0px;
+}
+
+.menu-link {
+    color: #3B3B3B;
+    font-weight: bold;
+}
+
+.nav-img {
+    padding: 2px;
+    margin: 0px;
+    height: 100px;
+    width: auto;
+    float: left;
+    position: absolute;
+}
+
+#image-div {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 60px;
+    flex: 1;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    -webkit-justify-content: space-between; /* Safari */
+    justify-content: space-between;
+    -webkit-align-items: center; /* Safari */
+    align-items: center;
+}
+
+#left-buddha {
+    width: 15%;
+    opacity: 0.7;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
+}
+
+#right-buddha {
+    width: 15%;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+@media (max-width: 600px) {
+    #left-buddha {
+        display: none;
+    }
+
+    #right-buddha {
+        width: 20%;
+    }
+
+    #image-div {
+        -webkit-justify-content: flex-end; /* Safari */
+        justify-content: flex-end;
+    }
+}
+
+.footer-flex {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center; /* Safari */
+    align-items: center;
+    align-self: flex-end;
+    -webkit-justify-content: space-between; /* Safari */
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+    color: #c8c8c8;
+    min-height: 50px;
+    background-color: #303f9f;
+    color: #cdcdcd;
+    min-height: 80px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.footer-item-right {
+    font-size: 1.2em;
+}
+
+.footer-flex a:link, .footer-flex a:visited, .footer-flex a:hover, .footer-flex a:active {
+    text-decoration: none;
+    color: #cdcdcd;
+}
+
+@media (max-width: 350px) {
+    .footer-flex {
+        -webkit-justify-content: center; /* Safari */
+        justify-content: center;
+    }
+
+    .footer-item-left {
+        text-align: center;
+    }
+}
+
+/*
+    *********** Site controller index CSS ***********
+*/
+
+.index-container {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: center; /* Safari */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.index-item {
+    width: 300px;
+    min-height: 300px;
+    margin: 10px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: center; /* Safari */
+    justify-content: center;
+    flex-direction: column;
+}
+
+.menu-text {
+    font-weight: 100;
+    text-align: center;
+    font-size: 3.5em;
+    text-transform: uppercase;
+}
+
+/*
+    *********** Overlay CSS ***********
+*/
+/* Overlay CSS taken from https://www.w3schools.com/howto/howto_js_fullscreen_overlay.asp */
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    color: #fafafa;
+    /*background-color: rgb(0,0,0); /* Black fallback color */
+    /*background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 10%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #fafafa;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+    /* When you mouse over the navigation links, change their color */
+    .overlay a:hover, .overlay a:focus {
+        color: #c8c8c8;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .overlay a:hover, .overlay a:focus {
+        color: #c8c8c8;
+    }
+
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+}
+
+/* Slider CSS created at http://danielstern.ca/range.css/#/ */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100px;
+    margin: 13.8px 0;
+}
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        background: #fafafa;
+        border-radius: 1.3px;
+        border: 0.2px solid #010101;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -14px;
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #fdfdfd;
+    }
+
+    input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        background: #fafafa;
+        border-radius: 1.3px;
+        border: 0.2px solid #010101;
+    }
+
+    input[type=range]::-moz-range-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+    }
+
+    input[type=range]::-ms-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    input[type=range]::-ms-fill-lower {
+        background: #f7f7f7;
+        border: 0.2px solid #010101;
+        border-radius: 2.6px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
+
+    input[type=range]::-ms-fill-upper {
+        background: #fafafa;
+        border: 0.2px solid #010101;
+        border-radius: 2.6px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
+
+    input[type=range]::-ms-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+        height: 8.4px;
+    }
+
+    input[type=range]:focus::-ms-fill-lower {
+        background: #fafafa;
+    }
+
+    input[type=range]:focus::-ms-fill-upper {
+        background: #fdfdfd;
+    }
+
+/*
+    *********** Profile CSS ***********
+*/
+
+.profile-container {
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+/* 
+    *********** Manage Groups CSS***********
+*/
+

@@ -92,7 +92,7 @@ namespace SapremaAPI.Controllers
         /// </summary>
         /// <param name="value">JSON of meditation being uploaded</param>
         [HttpPost("meditation", Name = "CreateMeditation")]
-        public bool CreateMeditation(string value)
+        public bool CreateMeditation([FromBody] string value)
         {
             var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
             var success = new Create().CreateMeditation(meditation);
@@ -104,9 +104,10 @@ namespace SapremaAPI.Controllers
         /// </summary>
         /// <param name="value">JSON of meditation being updated</param>
         [HttpPut("meditation/{id}", Name = "UpdateMeditation")]
-        public bool EditMeditation(string value)
+        public bool EditMeditation(Guid id, [FromBody] string value)
         {
             var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
+            meditation.MeditationId = id;
             var success = new Update().UpdateMeditation(meditation);
             return success;
         }

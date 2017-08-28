@@ -45,6 +45,24 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public bool OmitPose(string itemid, string userid)
+        {
+            SapUserPoses userPose = new SapUserPoses()
+            {
+                UserId = userid,
+                PoseId = itemid,
+                UserPoseId = Guid.NewGuid()
+            };
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                dbConn.SapUserPoses.Add(userPose);
+                dbConn.SaveChanges();
+
+                return true;
+            }
+        }
+
         public bool CreateFlaggedItem(FlaggedModel flaggedModel)
         {
             using (var dbConn = new SapremaFinalContext())
@@ -92,6 +110,26 @@ namespace SapremaAPI.DAL
                 {
                     return false;
                 }
+            }
+        }
+
+        public bool CreateBuyMeditation(string userId, string meditationId)
+        {
+            var id = Guid.Parse(meditationId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                SapUserMeditations sapUserMeditations = new SapUserMeditations()
+                {
+                    MeditationId = id,
+                    UserId = userId,
+                    UserMeditationsId = Guid.NewGuid()
+                };
+
+                dbConn.SapUserMeditations.Add(sapUserMeditations);
+                dbConn.SaveChanges();
+
+                return true;
             }
         }
     }

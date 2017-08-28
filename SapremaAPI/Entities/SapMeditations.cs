@@ -16,8 +16,8 @@ namespace SapremaAPI.Entities
         public string MeditationName { get; set; }
         public string MeditationTheme { get; set; }
         public string MeditationCreator { get; set; }
-        public Guid? MeditationImage { get; set; }
         public string MeditationType { get; set; }
+        public string MeditationDescription { get; set; }
 
         public virtual ICollection<SapFlagMeditations> SapFlagMeditations { get; set; }
         public virtual ICollection<SapReviewMeditation> SapReviewMeditation { get; set; }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SapremaAPI
 {
@@ -77,7 +78,7 @@ namespace SapremaAPI
         {
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                Authority = "http://localhost:5000",
+                Authority = "https://localhost:44359/",
                 RequireHttpsMetadata = false,
 
                 ApiName = "api1"
@@ -86,6 +87,13 @@ namespace SapremaAPI
             app.UseCors("CorsPolicy");
 
             app.UseMvc();
+
+            //This may need to change depending oh how future apps will require a login 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Frame-Options", "DENY");
+                await next();
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

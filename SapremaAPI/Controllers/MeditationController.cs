@@ -16,6 +16,30 @@ namespace SapremaAPI.Controllers
     public class MeditationController : Controller
     {
         /// <summary>
+        /// Get list of all meditation themes
+        /// </summary>
+        /// <returns>JSON list of themes</returns>
+        [HttpGet("themes")]
+        public string GetMeditationThemes()
+        {
+            var themeList = new Get().GetMeditationThemes();
+            var serializedThemeList = JsonConvert.SerializeObject(themeList);
+            return serializedThemeList;
+        }
+
+        /// <summary>
+        /// Get list of all meditation types
+        /// </summary>
+        /// <returns>JSON list of types</returns>
+        [HttpGet("types")]
+        public string GetMeditationTypes()
+        {
+            var typeList = new Get().GetMeditationTypes();
+            var serializedTypeList = JsonConvert.SerializeObject(typeList);
+            return serializedTypeList;
+        }
+
+        /// <summary>
         /// Get all meditations
         /// </summary>
         /// <returns>List of all meditations</returns>
@@ -52,5 +76,7 @@ namespace SapremaAPI.Controllers
             var meditationReviewsSerialized = JsonConvert.SerializeObject(meditationReviews);
             return meditationReviewsSerialized;
         }
+
+        
     }
 }

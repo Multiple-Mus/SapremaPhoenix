@@ -15,7 +15,7 @@ function SetVolume(val){
 
 function showBreath(){
     document.getElementById("breath-display").style.backgroundColor = "rgba(121,134,203, 0.9)";
-    breathText = "inhale";
+    breathText = "Bridge";
     document.getElementById("breath-text").innerHTML = breathText;
     document.getElementById("breath-display").style.width = "100%";
 }

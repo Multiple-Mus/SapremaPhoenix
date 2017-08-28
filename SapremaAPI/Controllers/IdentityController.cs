@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace SapremaAPI.Controllers
 {
@@ -21,6 +22,9 @@ namespace SapremaAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            var identity = this.User.Identity as ClaimsIdentity;
+            var roleClaims = identity.Claims.Where(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Select(x => x.Value).ToList();
+            var nonRoleClaims = identity.Claims.Where(x => x.Type != ClaimsIdentity.DefaultRoleClaimType).Select(x => new { Type = x.Type, Value = x.Value }).ToList();
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }
     }

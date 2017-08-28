@@ -87,9 +87,12 @@
 
 // *************** WORKING ****************
 
+var urlMVC = "http://localhost:5002/Social/"
+var urlAPI = "http://localhost:5001/api/"
+
 $('#createGroup').on('click', function () {
     var validation = checkInput();
-    if (validation == true) {
+    if (validation === true) {
         createGroup();
     }
     else {
@@ -100,17 +103,17 @@ $('#createGroup').on('click', function () {
 
 function updateGroup(id) {
     var validation = checkInput();
-    if (validation == true) {
+    if (validation === true) {
         update(id);
     }
     else {
-        $('#group-name-error').show();
+        //$('#group-name-error').show();
     }
 }
 
 function checkInput() {
     var test = $('#GroupName').val();
-    if (test == "")
+    if (test === "")
     {
         return false;
     }
@@ -126,9 +129,9 @@ function clearForm() {
 }
 
 function deleteModal(id) {
-    $('.modal-title').append("Delete Group");
-    $('.modal-body').append("Are you sure you want to delete group:<br>" + $('#GroupName').val());
-    $('.modal-footer').append('<button type="button" class="btn btn-default" id="deleteConfermation" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+    $('.modal-title').html("Delete Group");
+    $('.modal-body').html("Are you sure you want to delete group:<br>" + $('#GroupName').val());
+    $('.modal-footer').html('<button type="button" class="btn btn-default" id="deleteConfermation" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
     $('#deleteConfermation').attr("onclick", "deleteGroup('" + id + "')");
 }
 
@@ -136,7 +139,6 @@ function createGroup() {
     var GroupDescription = "'" + $('#GroupDescription').val() + "'";
     var GroupName = "'" + $('#GroupName').val() + "'";
     var GroupLevel = $('#GroupLevel').val();
-    var GroupAdmin = "'cbdf1836-1c05-40bf-8505-245fc8bcf17e'";
     var GroupStatus;
     if ($('#GroupStatus').is(':checked')) {
         GroupStatus = true;
@@ -147,13 +149,12 @@ function createGroup() {
     var value = '"{GroupStatus:' + GroupStatus +
         ',GroupName:' + GroupName +
         ',GroupDescription:' + GroupDescription +
-        ',GroupLevel:' + GroupLevel +
-        ',GroupAdmin:' + GroupAdmin + '}"';
-    var apiurl = "http://localhost:5001/api/user/groups/";
+        ',GroupLevel:' + GroupLevel +'}"';
+    var url = urlMVC + "CreateGroup";
     //console.log(value);
     $.ajax({
         type: "POST",
-        url: apiurl,
+        url: url,
         contentType: "text/json",
         data: value,
         success: function (data, txtStatus, xhr) {
@@ -161,7 +162,7 @@ function createGroup() {
             clearForm();
             //location.reload();
             setupPage();
-            $('#success-message').append("<span class='success'>Group Created</span>");
+            $('#success-message').html("<span class='success'>Group Created</span>");
             
         },
         error: function (xhr, txtStatus, errorThrown) {
@@ -171,10 +172,10 @@ function createGroup() {
 }
 
 function deleteGroup(id) {
-    var apiurl = "http://localhost:5001/api/user/groups/" + id;
-    console.log("this is some text");
+    var apiurl = urlMVC + "DeleteGroup?itemid=" + id;
+    //console.log("this is some text");
     $.ajax({
-        type: "DELETE",
+        type: "GET",
         url: apiurl,
         contentType: "text/json",
         success: function (data, txtStatus, xhr) {
@@ -182,7 +183,7 @@ function deleteGroup(id) {
             clearForm();
             //location.reload();
             setupPage();
-            $('#success-message').append("<span class='success'>Group Deleted</span>");
+            $('#success-message').html("<span class='success'>Group Deleted</span>");
             $('.modal-body').html("");
             $('.modal-footer').html("");
             setupPage();
@@ -190,7 +191,10 @@ function deleteGroup(id) {
         error: function (xhr, txtStatus, errorThrown) {
             console.log('error');
         }
+        
     });
+
+    $('#createGroup').show();
 }
 
 function update(id) {
@@ -208,29 +212,36 @@ function update(id) {
         ',GroupName:' + GroupName +
         ',GroupDescription:' + GroupDescription +
         ',GroupLevel:' + GroupLevel + '}"';
-    var apiurl = "http://localhost:5001/api/user/groups/" + id;
+    var apiurl = urlMVC + "UpdateGroup?itemid=" + id;
     //console.log(value);
     $.ajax({
-        type: "PUT",
+        type: "POST",
         url: apiurl,
         contentType: "text/json",
         data: value,
         success: function (data, txtStatus, xhr) {
             //console.log(data);
             clearForm();
-            $('#success-message').val("Group Updated");
+            $('#success-message').html("Group Updated");
+            $('#createGroup').show();
+            $('#updateGroup').hide();
+            setupPage();
             //location.reload();
         },
         error: function (xhr, txtStatus, errorThrown) {
             console.log('error');
         }
     });
+
+
+
 }
 
 function editGroup(id) {
     //console.log(id);
     $('#createGroup').hide();
     $('#updateGroup').show();
+    $('success-message').html("");
     var apiurl = "http://localhost:5001/api/groups/" + id;
     $.ajax({
         type: "GET",
@@ -251,9 +262,9 @@ function editGroup(id) {
         $('#GroupLevel').val(data["GroupLevel"]);
         $('#updateGroup').attr("onclick", "updateGroup('" + data['GroupId'] + "')");
         $('#deleteGroup').attr("onclick", "deleteModal('" + data['GroupId'] + "')");
-        $('success-message').val("");
+        $('#success-message').html("");
         deleteModal(data['GroupId']);
-        $('#delete-group').show();
+        $('#delete-button').show();
     })
 }
 
@@ -263,12 +274,19 @@ $(document).ready(function () {
 });
 
 function setupPage() {
+    var classDataArrayCounter = 0;
+    var classDataArray;
     $('#updateGroup').hide();
+    $('#delete-button').hide();
     $.ajax({
         type: "GET",
-        url: 'http://localhost:5001/api/user/groups/cbdf1836-1c05-40bf-8505-245fc8bcf17e',
+        url: 'http://localhost:5001/api/usergroups/groups/cbdf1836-1c05-40bf-8505-245fc8bcf17e',
         dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        }
     }).done(function (data) {
+        $('#group-list').html("");
         for (var i = 0; i < data.length; i++) {
             var listItem = "<span class='list-span'>" + data[i].GroupName + "<button onclick=\"editGroup('" + data[i].GroupId + "')\" class=\"btn btn-default\" type=\"submit\">Submit</button></span><hr /><br>";
             $('#group-list').append(listItem);

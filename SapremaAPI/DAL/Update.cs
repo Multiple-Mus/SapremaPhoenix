@@ -22,7 +22,7 @@ namespace SapremaAPI.DAL
                 sapMeditation.MeditationTheme = meditation.MeditationTheme;
                 sapMeditation.MeditationCreator = meditation.MeditationCreator;
                 sapMeditation.MeditationType = meditation.MeditationType;
-                sapMeditation.MeditationImage = meditation.MeditationImage;
+                sapMeditation.MeditationDescription = meditation.MeditationDescription;
 
                 dbConn.SaveChanges();
             };
