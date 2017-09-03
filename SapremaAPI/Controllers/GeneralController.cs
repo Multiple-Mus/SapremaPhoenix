@@ -19,12 +19,12 @@ namespace SapremaAPI.Controllers
         /// </summary>
         /// <param name="id">Review ID</param>
         /// <returns>Type of review</returns>
-        [HttpGet("reviewtype/{id}", Name = "GetReviewType")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public string GetReviewType(string id)
-        {
-            var reviewType = new Get().GetReviewType(id);
-            return reviewType;
-        }
+        //[HttpGet("reviewtype/{id}", Name = "GetReviewType")]
+        //[ApiExplorerSettings(IgnoreApi = true)]
+        //public string GetReviewType(string id)
+        //{
+        //    var reviewType = new Get().GetReviewType(id);
+        //    return reviewType;
+        //}
     }
 }

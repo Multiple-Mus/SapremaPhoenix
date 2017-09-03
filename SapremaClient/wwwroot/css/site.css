@@ -14,6 +14,10 @@ body {
     font-weight: 300;
 }
 
+.breath {
+    padding-left: 300px;
+}
+
 a:link {
     color: inherit;
     text-decoration: none;
@@ -22,6 +26,10 @@ a:link {
 a:visited {
     color: inherit;
     text-decoration: none;
+}
+
+#vol-control {
+    padding-left: 300px;
 }
 
 a:hover {
@@ -69,15 +77,15 @@ h1 {
     border: 0px;
 }
 
-.btn:hover {
-    background-color: #6372c3;
-    color: white;
-}
+    .btn:hover {
+        background-color: #6372c3;
+        color: white;
+    }
 
-.btn:active {
-    background-color: #6372c3;
-    color: white;
-}
+    .btn:active {
+        background-color: #6372c3;
+        color: white;
+    }
 
 .list-span {
     display: flex;
@@ -86,7 +94,11 @@ h1 {
 
 .error-input {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+
+.pose-name {
+    width: 200px;
 }
 
 .error {
@@ -98,6 +110,20 @@ h1 {
     padding-top: 26px;
 }
 
+.poseIn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub-heading {
+    text-align: center;
+    font-weight: 100;
+}
+
+.pose {
+    padding-top: 8px;
+}
+
 .success-output {
     display: flex;
     justify-content: space-between;
@@ -105,6 +131,11 @@ h1 {
 
 .row {
     margin: 0px;
+}
+
+.pose-list {
+    display: flex;
+    justify-content: space-between
 }
 
 .store-rating {
@@ -146,32 +177,94 @@ h1 {
 /****** Style Star Rating Widget *****/
 
 .rating {
-    border: none; 
+    border: none;
 }
 
-.rating > input {
-    display: none;
-}
+    .rating > input {
+        display: none;
+    }
 
-.rating > label:before {
-    margin: 5px;
-    font-size: 1.25em;
-    font-family: FontAwesome;
+    .rating > label:before {
+        margin: 5px;
+        font-size: 1.25em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+
+    .rating > label {
+        color: #ddd;
+        float: right;
+    }
+
+/* Toggle switch CSS taken from https://www.htmllion.com/css3-toggle-switch-button.html */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
     display: inline-block;
-    content: "\f005";
+    width: 60px;
+    height: 34px;
 }
 
-.rating > label {
-    color: #ddd;
-    float: right;
+    /* Hide default HTML checkbox */
+    .switch input {
+        display: none;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #7986cb;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #7986cb;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label {
     color: #FFD700;
 }
-    /* hover previous stars in list */
+/* hover previous stars in list */
 
 /* Following code take from Bootstrap navbar colour generator available at http://work.smarchal.com/twbscolor/ */
 .navbar-default {
@@ -183,92 +276,92 @@ h1 {
     flex: 0 0 100%;
 }
 
-.navbar-default .navbar-brand {
-    color: #dcdcdc;
-}
+    .navbar-default .navbar-brand {
+        color: #dcdcdc;
+    }
 
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-    color: #cdcdcd;
-}
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+            color: #cdcdcd;
+        }
 
-.navbar-default .navbar-text {
-    color: #dcdcdc;
-}
+    .navbar-default .navbar-text {
+        color: #dcdcdc;
+    }
 
-.navbar-default .navbar-nav > li > a {
-    color: #dcdcdc;
-}
+    .navbar-default .navbar-nav > li > a {
+        color: #dcdcdc;
+    }
 
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-    color: #cdcdcd;
-}
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color: #cdcdcd;
+        }
 
-.navbar-default .navbar-nav > li > .dropdown-menu {
-    background-color: #303f9f;
-}
+    .navbar-default .navbar-nav > li > .dropdown-menu {
+        background-color: #303f9f;
+    }
 
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
-    color: #dcdcdc;
-}
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+            color: #dcdcdc;
+        }
 
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
-.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
-    color: #cdcdcd;
-    background-color: #7986cb;
-}
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+            .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+                color: #cdcdcd;
+                background-color: #7986cb;
+            }
 
-.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
-    background-color: #7986cb;
-}
+        .navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+            background-color: #7986cb;
+        }
 
-.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
-.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #cdcdcd;
-    background-color: #7986cb;
-}
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
 
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-    color: #cdcdcd;
-    background-color: #7986cb;
-}
+    .navbar-default .navbar-nav > .active > a,
+    .navbar-default .navbar-nav > .active > a:hover,
+    .navbar-default .navbar-nav > .active > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
 
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a:focus {
-    color: #cdcdcd;
-    background-color: #7986cb;
-}
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+        color: #cdcdcd;
+        background-color: #7986cb;
+    }
 
-.navbar-default .navbar-toggle {
-    border-color: #7986cb;
-}
+    .navbar-default .navbar-toggle {
+        border-color: #7986cb;
+    }
 
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
-    background-color: #7986cb;
-}
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: #7986cb;
+        }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #dcdcdc;
-}
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #dcdcdc;
+        }
 
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-    border-color: #dcdcdc;
-}
+    .navbar-default .navbar-collapse,
+    .navbar-default .navbar-form {
+        border-color: #dcdcdc;
+    }
 
-.navbar-default .navbar-link {
-    color: #dcdcdc;
-}
+    .navbar-default .navbar-link {
+        color: #dcdcdc;
+    }
 
-.navbar-default .navbar-link:hover {
-    color: #cdcdcd;
-}
+        .navbar-default .navbar-link:hover {
+            color: #cdcdcd;
+        }
 
 .navbar-brand {
     font-weight: 700;
@@ -455,15 +548,15 @@ h1 {
     transition: 0.3s; /* Transition effects on hover (color) */
 }
 
-/* When you mouse over the navigation links, change their color */
-.overlay a:hover, .overlay a:focus {
-    color: #c8c8c8;
-}
+    /* When you mouse over the navigation links, change their color */
+    .overlay a:hover, .overlay a:focus {
+        color: #c8c8c8;
+    }
 
-/* When you mouse over the navigation links, change their color */
-.overlay a:hover, .overlay a:focus {
-    color: #c8c8c8;
-}
+    /* When you mouse over the navigation links, change their color */
+    .overlay a:hover, .overlay a:focus {
+        color: #c8c8c8;
+    }
 
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
@@ -480,97 +573,97 @@ input[type=range] {
     margin: 13.8px 0;
 }
 
-input[type=range]:focus {
-    outline: none;
-}
+    input[type=range]:focus {
+        outline: none;
+    }
 
-input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-    background: #fafafa;
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
-}
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        background: #fafafa;
+        border-radius: 1.3px;
+        border: 0.2px solid #010101;
+    }
 
-input[type=range]::-webkit-slider-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -14px;
-}
+    input[type=range]::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -14px;
+    }
 
-input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #fdfdfd;
-}
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #fdfdfd;
+    }
 
-input[type=range]::-moz-range-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-    background: #fafafa;
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
-}
+    input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        background: #fafafa;
+        border-radius: 1.3px;
+        border: 0.2px solid #010101;
+    }
 
-input[type=range]::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-}
+    input[type=range]::-moz-range-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+    }
 
-input[type=range]::-ms-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-}
+    input[type=range]::-ms-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
 
-input[type=range]::-ms-fill-lower {
-    background: #f7f7f7;
-    border: 0.2px solid #010101;
-    border-radius: 2.6px;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-}
+    input[type=range]::-ms-fill-lower {
+        background: #f7f7f7;
+        border: 0.2px solid #010101;
+        border-radius: 2.6px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
 
-input[type=range]::-ms-fill-upper {
-    background: #fafafa;
-    border: 0.2px solid #010101;
-    border-radius: 2.6px;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-}
+    input[type=range]::-ms-fill-upper {
+        background: #fafafa;
+        border: 0.2px solid #010101;
+        border-radius: 2.6px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
 
-input[type=range]::-ms-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-    height: 8.4px;
-}
+    input[type=range]::-ms-thumb {
+        box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        border: 1px solid #000000;
+        height: 36px;
+        width: 16px;
+        border-radius: 3px;
+        background: #ffffff;
+        cursor: pointer;
+        height: 8.4px;
+    }
 
-input[type=range]:focus::-ms-fill-lower {
-    background: #fafafa;
-}
+    input[type=range]:focus::-ms-fill-lower {
+        background: #fafafa;
+    }
 
-input[type=range]:focus::-ms-fill-upper {
-    background: #fdfdfd;
-}
+    input[type=range]:focus::-ms-fill-upper {
+        background: #fdfdfd;
+    }
 
 /*
     *********** Profile CSS ***********
@@ -582,6 +675,17 @@ input[type=range]:focus::-ms-fill-upper {
     align-items: center;
     flex-direction: column;
     padding-top: 10px;
+}
+
+.class-DDL {
+    width: 100%;
+    height: auto;
+    color: green;
+}
+
+.class-info-div {
+    width: 100%;
+    height: auto;
 }
 
 /* 

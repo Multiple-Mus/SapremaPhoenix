@@ -44,7 +44,7 @@ function startTimer(secs){
 function tick(){
 
     var secs;
-    if (position == 0){
+    if (position === 0){
         secs = timeInSecs;
         breathText = "inhale";
 
@@ -55,7 +55,7 @@ function tick(){
         else{
             clearInterval(ticker);
             position++;
-            if (breathTime[1] == 0){
+            if (breathTime[1] === 0){
                 position++;
                 startTimer(position[2]);
                 timeInSecs = breathTime[2];
@@ -68,7 +68,7 @@ function tick(){
         }
     }
 
-    else if (position == 1){
+    else if (position === 1){
 
         secs = timeInSecs;
         breathText = "hold";
@@ -85,7 +85,7 @@ function tick(){
         }
     }
 
-    else if (position == 2){
+    else if (position === 2){
 
         secs = timeInSecs;
         breathText = "exhale";
@@ -97,7 +97,7 @@ function tick(){
         else{
         clearInterval(ticker);
         position++;
-            if (breathTime[3] == 0){
+            if (breathTime[3] === 0){
                 position = 0;
                 startTimer(position[0]);
                 timeInSecs = breathTime[0];
@@ -110,7 +110,7 @@ function tick(){
         }
     }
 
-    else if (position == 3){
+    else if (position === 3){
 
         secs = timeInSecs;
         breathText = "hold";

@@ -36,7 +36,7 @@ namespace SapremaAPI.DAL
                 var meditationReturn = new MeditationModel()
                 {
                     MeditationName = meditation.MeditationName,
-                    MeditationImage = meditation.MeditationImage.ToString(),
+                    MeditationDescription = meditation.MeditationDescription.ToString(),
                     MeditationCreator = new Get().GetTeacherName(meditation.MeditationCreator),
                     MeditationTheme = meditation.MeditationTheme,
                     MeditationType = meditation.MeditationType,
@@ -60,24 +60,79 @@ namespace SapremaAPI.DAL
             {
                 var meditationsList = dbConn.SapMeditations.ToList();
 
-                foreach(var record in meditationsList)
+                foreach (var record in meditationsList)
                 {
-                    var meditationStars = dbConn.SapReviewMeditation.Where(a => a.MeditationId == record.MeditationId).Select(r => r.ReviewStars).DefaultIfEmpty().Average();
+                    //var meditationStars = dbConn.SapReviewMeditation.Where(a => a.MeditationId == record.MeditationId).Select(r => r.ReviewStars).DefaultIfEmpty().Average();
                     MeditationModel mModel = new MeditationModel()
                     {
                         MeditationName = record.MeditationName,
-                        MeditationImage = record.MeditationImage.ToString(),
-                        MeditationCreator = new Get().GetTeacherName(record.MeditationCreator),
+                        MeditationDescription = record.MeditationDescription.ToString(),
+                        MeditationCreator = record.MeditationCreator.ToString(),
                         MeditationTheme = record.MeditationTheme,
                         MeditationType = record.MeditationType,
                         MeditationId = record.MeditationId.ToString(),
-                        MeditationRating = meditationStars
+                        MeditationRating = 5
                     };
 
                     meditationsModel.Add(mModel);
                 }
 
                 return meditationsModel;
+            }
+        }
+
+        public List<MeditationStoreModel> GetUserMeditations(string id)
+        {
+            List<MeditationStoreModel> meditationStoreModel = new List<MeditationStoreModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var meditationList = dbConn.SapMeditations.ToList();
+
+                foreach (var record in meditationList)
+                {
+                    var meditationStars = dbConn.SapReviewMeditation.Where(a => a.MeditationId == record.MeditationId).Select(r => r.ReviewStars).DefaultIfEmpty().Average();
+                    MeditationStoreModel mModel = new MeditationStoreModel()
+                    {
+                        MeditationName = record.MeditationName,
+                        //MeditationImage = record.MeditationImage.ToString(),
+                        MeditationCreator = record.MeditationCreator, //new Get().GetTeacherName(record.MeditationCreator),
+                        MeditationTheme = record.MeditationTheme,
+                        MeditationType = record.MeditationType,
+                        MeditationId = record.MeditationId.ToString(),
+                        MeditationRating = Math.Round(meditationStars, 0, MidpointRounding.AwayFromZero),
+                        MeditationPurchased = new Get().GetMeditationPurchased(id, record.MeditationId)
+                    };
+
+                    meditationStoreModel.Add(mModel);
+                }
+
+                return meditationStoreModel;
+            }
+        }
+
+        public List<UserMeditationsModel> GetUserListMeditations(string id)
+        {
+            List<UserMeditationsModel> userMeditationsModel = new List<UserMeditationsModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var purchasedList = dbConn.SapUserMeditations.Where(a => a.UserId == id).ToList();
+
+                foreach (var record in purchasedList)
+                {
+                    var meditation = dbConn.SapMeditations.Where(a => a.MeditationId == record.MeditationId).SingleOrDefault();
+                    UserMeditationsModel uModel = new UserMeditationsModel()
+                    {
+                        MeditationId = record.MeditationId,
+                        MeditationName = meditation.MeditationName,
+                        MeditationCreator = meditation.MeditationCreator
+                    };
+
+                    userMeditationsModel.Add(uModel);
+                }
+
+                return userMeditationsModel;
             }
         }
 
@@ -187,10 +242,15 @@ namespace SapremaAPI.DAL
          * */
         public ReviewModel GetSingleUserReview(string userId, string itemId)
         {
-            var type = new Get().GetReviewType(itemId);
+            var type = new Get().GetReviewType(userId, itemId);
 
             using (var dbConn = new SapremaFinalContext())
             {
+                if (type == null)
+                {
+                    return null;
+                }
+
                 if (type.Equals("class"))
                 {
                     var returnReview = new Get().GetSingleUserClassReview(userId, itemId);
@@ -260,6 +320,38 @@ namespace SapremaAPI.DAL
             }
         }
 
+
+        /*
+         * Get a list of all poses and see if a user has chosen ot omit them
+         * */
+        public List<UserPosesModel> GetAllUserPoses(string id)
+        {
+            List<UserPosesModel> userPoseModel = new List<UserPosesModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var poseList = dbConn.SapPoses.ToList();
+
+                foreach (var record in poseList)
+                {
+                    UserPosesModel uModel = new UserPosesModel()
+                    {
+                        PoseId = record.PoseId,
+                        PoseName = record.PoseName,
+                        PoseLevel = record.PoseLevel,
+                        PoseTheme = record.PoseTheme,
+                        PoseOmit = new Get().CheckOmit(id, record.PoseId)
+                    };
+
+                    userPoseModel.Add(uModel);
+                }
+
+                return userPoseModel;
+            }
+        }
+
+
+
         /*
          * Get single flagged item
          * Maybe have a look at the last line "return null" - try and improve on error reporting
@@ -312,6 +404,37 @@ namespace SapremaAPI.DAL
                 };
 
                 return flagReturn;
+            }
+        }
+
+        public List<ClassInfoModel> GetClassData(string classId)
+        {
+            var id = Guid.Parse(classId);
+            List<ClassInfoModel> classInfoModelList = new List<ClassInfoModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                IEnumerable<SapClass> sapClassList = dbConn.SapClass.Where(a => a.ClassGroupId == id);
+                if (sapClassList == null)
+                {
+                    return null;
+                }
+
+                foreach (SapClass sapClass in sapClassList)
+                {
+                    ClassInfoModel classInfoModel = new ClassInfoModel()
+                    {
+                        ClassCreatedBy = sapClass.ClassCreatedBy,
+                        ClassName = sapClass.ClassName,
+                        ClassLevel = Convert.ToInt32(sapClass.ClassLevel),
+                        ClassTheme = sapClass.ClassTheme,
+                        ClassDescription = sapClass.ClassDescription,
+                        ClassId = sapClass.ClassId,
+                        GroupId = sapClass.ClassGroupId.Value
+                    };
+                    classInfoModelList.Add(classInfoModel);
+                }
+                return classInfoModelList;
             }
         }
 
@@ -400,7 +523,7 @@ namespace SapremaAPI.DAL
                 {
                     GroupDescription = record.GroupDescription,
                     GroupId = record.GroupId,
-                    GroupLevel = record.GroupLevel.ToString(),
+                    GroupLevel = record.GroupLevel,
                     GroupName = record.GroupName,
                     GroupStatus = record.GroupStatus.ToString()
                 };
@@ -418,9 +541,10 @@ namespace SapremaAPI.DAL
 
             using (var dbConn = new SapremaFinalContext())
             {
-                var groupList = dbConn.SapGroups.Where(a => a.GroupAdmin == id).ToList();
+                List<SapGroups> groups = dbConn.SapGroups.Where(a => a.GroupAdmin == id).ToList();
+                //var groupList = dbConn.SapGroups.Where(a => a.GroupAdmin == id).ToList();
 
-                foreach (var record in groupList)
+                foreach (var record in groups)
                 {
                     UserGroupsModel gModel = new UserGroupsModel()
                     {
@@ -435,6 +559,103 @@ namespace SapremaAPI.DAL
             }
         }
 
+        /*
+         * Get all meditation themes
+         * */
+        public List<string> GetMeditationThemes()
+        {
+            using (var dbconn = new SapremaFinalContext())
+            {
+                var themeList = dbconn.SapMeditations.Select(a => a.MeditationTheme).Distinct().ToList();
+                return themeList;
+            }
+        }
+
+        /*
+         * Get all meditation types
+         * */
+        public List<string> GetMeditationTypes()
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var typeList = dbConn.SapMeditations.Select(a => a.MeditationType).Distinct().ToList();
+                return typeList;
+            }
+        }
+
+        public bool GetOwnership(string userId, string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var ownership = dbConn.SapUserMeditations.Where(a => a.UserId == userId && a.MeditationId == id).FirstOrDefault();
+                if (ownership == null)
+                {
+                    return false;
+                }
+
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public List<ClassModel> GetUserclasses(string userId)
+        {
+            List<ClassModel> classes = new List<ClassModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                List<SapClass> list = dbConn.SapClass.Where(a => a.ClassCreatedBy == userId).ToList();
+
+                foreach (var record in list)
+                {
+                    ClassModel cModel = new ClassModel()
+                    {
+                        ClassName = record.ClassName,
+                        ClassTheme = record.ClassTheme,
+                        ClassLevel = record.ClassLevel.Value,
+                        ClassId = record.ClassId
+                    };
+
+                    classes.Add(cModel);
+                }
+
+                return classes;
+            }
+        }
+
+        public List<ClassModel> GetSubbedclasses(string userId)
+        {
+            List<ClassModel> classes = new List<ClassModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                List<SapUserGroups> list = dbConn.SapUserGroups.Where(a => a.UserId == userId).ToList();
+
+                foreach (var record in list)
+                {
+                    List<SapClass> item = dbConn.SapClass.Where(a => a.ClassGroupId == record.GroupId).ToList();
+
+                    foreach(var rec in item)
+                    {
+                        ClassModel cModel = new ClassModel()
+                        {
+                            ClassName = rec.ClassName,
+                            ClassTheme = rec.ClassTheme,
+                            ClassLevel = rec.ClassLevel.Value,
+                            ClassId = rec.ClassId
+                        };
+
+                        classes.Add(cModel);
+                    }
+                }
+                return classes;
+            }
+        }
+
 
         /*
          * Helper get methods below
@@ -443,18 +664,18 @@ namespace SapremaAPI.DAL
         /*
          * Get the type of review, used only on this sheet for getting user reviews
          * */
-        public string GetReviewType(string reviewId)
+        public string GetReviewType(string userId, string itemId)
         {
-            var id = Guid.Parse(reviewId);
+            var id = Guid.Parse(itemId);
 
             using (var dbConn = new SapremaFinalContext())
             {
-                if (dbConn.SapReviewClass.Any(a => a.ReviewClassId == id))
+                if (dbConn.SapReviewClass.Any(a => a.ClassId == id && a.UserId == userId))
                 {
                     return "class";
                 }
 
-                else if (dbConn.SapReviewMeditation.Any(a => a.ReviewMeditationId == id))
+                else if (dbConn.SapReviewMeditation.Any(a => a.MeditationId == id && a.UserId == userId))
                 {
                     return "meditation";
                 }
@@ -462,6 +683,27 @@ namespace SapremaAPI.DAL
                 else
                 {
                     return null;
+                }
+            }
+        }
+
+        /*
+         * Check if a meditation is purchased
+         * */
+        public bool GetMeditationPurchased(string userId, Guid meditationId)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var purchased = dbConn.SapUserMeditations.Where(a => a.UserId == userId && a.MeditationId == meditationId).SingleOrDefault();
+
+                if (purchased != null)
+                {
+                    return true;
+                }
+
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -513,6 +755,27 @@ namespace SapremaAPI.DAL
             {
                 var username = dbConn.AspNetUsers.Where(a => a.Id == id).Select(b => b.UserName).FirstOrDefault();
                 return username;
+            }
+        }
+
+        /*
+         * Check omit status of pose
+         * */
+        public bool CheckOmit(string userId, string poseId)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var omit = dbConn.SapUserPoses.Where(a => a.UserId == userId && a.PoseId == poseId).FirstOrDefault();
+
+                if (omit == null)
+                {
+                    return false;
+                }
+
+                else
+                {
+                    return true;
+                }
             }
         }
     }

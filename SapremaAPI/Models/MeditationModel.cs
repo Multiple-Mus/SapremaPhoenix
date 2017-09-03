@@ -14,7 +14,7 @@ namespace SapremaAPI.Models
         public string MeditationName { get; set; }
         public string MeditationTheme { get; set; }
         public string MeditationCreator { get; set; }
-        public string MeditationImage { get; set; }
+        public string MeditationDescription { get; set; }
         public string MeditationType { get; set; }
         public decimal MeditationRating { get; set; }
     }

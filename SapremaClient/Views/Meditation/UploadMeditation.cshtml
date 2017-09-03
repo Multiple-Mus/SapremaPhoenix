@@ -10,7 +10,7 @@
     <div class="name-search">
         <div>
             <label for="MeditationName">Meditation Name</label>
-            <input type="text" class="form-control" id="MeditationName" />
+            <input type="text" class="form-control" id="MeditationSearch" />
         </div>
         <div class="search-button text-center">
             <button class="btn btn-default button-medium" id="searchMeditations"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
@@ -32,7 +32,7 @@
 
     <div class="form-group">
         <div class="error-input">
-            <label for="MeditationName">Meditation Name</label><span class="error" id="meditation-name-error" display="none">Please enter a name!</span>
+            <label for="MeditationName">Meditation Name</label><span class="error" id="meditation-error1" display="none">Please enter a name!</span>
         </div>
         <input type="text" class="form-control" id="MeditationName" placeholder="Mediation Name" required>
 
@@ -43,15 +43,21 @@
     </div>
     <div class="form-group">
         <div class="error-input">
-            <label for="MeditationTheme">Meditation Theme</label><span class="error" id="meditation-name-error" display="none">Please enter a theme!</span>
+            <label for="MeditationTheme">Meditation Theme</label><span class="error" id="meditation-error2" display="none">Please enter a theme!</span>
         </div>
         <input type="text" class="form-control" id="MeditationTheme" placeholder="Mediation Theme">
     </div>
     <div class="form-group">
         <div class="error-input">
-            <label for="MeditationCreator">Meditation Creator</label><span class="error" id="meditation-name-error" display="none">Please enter a creator!</span>
+            <label for="MeditationCreator">Meditation Creator</label><span class="error" id="meditation-error3" display="none">Please enter a creator!</span>
         </div>
         <input type="text" class="form-control" id="MeditationCreator" placeholder="Mediation Creator">
+    </div>
+    <div class="form-group">
+        <div class="error-input">
+            <label for="MeditationType">Meditation Type</label><span class="error" id="meditation-error4" display="none">Please enter a type!</span>
+        </div>
+        <input type="text" class="form-control" id="MeditationType" placeholder="Meditation Type">
     </div>
     <div class="form-group">
         <label for="MeditationImage">Meditation Image</label>
@@ -60,11 +66,13 @@
     </div>
     <div class="form-group">
         <div class="error-input">
-            <label for="MeditationAudio">Meditation Audio</label><span class="error" id="meditation-name-error" display="none">Please upload a file!</span>
+            <label for="MeditationAudio">Meditation Audio</label><span class="error" id="meditation-error5" display="none">Please upload a file!</span>
         </div>
         <input type="file" class="form-control" id="MeditationAudio" required>
     </div>
-    <button class="btn btn-default" id="createGroup" type="button">Create</button>
+    <button class="btn btn-default" id="uploadMeditation" type="button">Upload</button>
     <button class="btn btn-default" id="updateGroup">Update</button>
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" id="delete-button">Delete</button>
 </div>
+
+<script type="text/javascript" src="~/js/UploadMeditation.js"></script>

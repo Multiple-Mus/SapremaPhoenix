@@ -16,16 +16,41 @@ namespace SapremaAPI.Controllers
     public class MeditationController : Controller
     {
         /// <summary>
-        /// Get all meditations
+        /// Get list of all meditation themes
         /// </summary>
-        /// <returns>List of all meditations</returns>
-        [HttpGet]
-        public string GetAllMeditations()
+        /// <returns>JSON list of themes</returns>
+        [HttpGet("themes")]
+        public string GetMeditationThemes()
         {
-            var meditationList = new Get().GetAllMeditations();
-            var seralizedMeditationList = JsonConvert.SerializeObject(meditationList);
-            return seralizedMeditationList;
+            var themeList = new Get().GetMeditationThemes();
+            var serializedThemeList = JsonConvert.SerializeObject(themeList);
+            return serializedThemeList;
         }
+
+        /// <summary>
+        /// Get list of all meditation types
+        /// </summary>
+        /// <returns>JSON list of types</returns>
+        [HttpGet("types")]
+        public string GetMeditationTypes()
+        {
+            var typeList = new Get().GetMeditationTypes();
+            var serializedTypeList = JsonConvert.SerializeObject(typeList);
+            return serializedTypeList;
+        }
+
+        ///// <summary>
+        ///// Get all meditations
+        ///// </summary>
+        ///// <returns>List of all meditations</returns>
+        //[HttpGet]
+        //[Authorize]
+        //public string GetAllMeditations()
+        //{
+        //    var meditationList = new Get().GetAllMeditations();
+        //    var seralizedMeditationList = JsonConvert.SerializeObject(meditationList);
+        //    return seralizedMeditationList;
+        //}
 
         /// <summary>
         /// Get single meditation
@@ -45,12 +70,14 @@ namespace SapremaAPI.Controllers
         /// </summary>
         /// <param name="id">Meditation ID</param>
         /// <returns>All reviews for a single meditation</returns>
-        [HttpGet("{id}/reviews")]
+        [HttpGet("reviews/{id}", Name = "GetMeditationReviews")]
         public string GetMeditationReviews(string id)
         {
             var meditationReviews = new Get().GetAllMeditationReviews(id);
             var meditationReviewsSerialized = JsonConvert.SerializeObject(meditationReviews);
             return meditationReviewsSerialized;
         }
+
+
     }
 }

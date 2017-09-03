@@ -308,7 +308,7 @@ namespace SapremaAPI.Entities
 
                 entity.Property(e => e.GroupName)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.GroupAdminNavigation)
                     .WithMany(p => p.SapGroups)

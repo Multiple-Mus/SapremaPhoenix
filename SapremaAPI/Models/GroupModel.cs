@@ -12,6 +12,6 @@ namespace SapremaAPI.Models
         public string GroupName { get; set; }
         public string GroupDescription { get; set; }
         public string GroupAdmin { get; set; }
-        public string GroupLevel { get; set; }
+        public int GroupLevel { get; set; }
     }
 }

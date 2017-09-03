@@ -50,10 +50,15 @@
             }
         </div>
     </div>
-
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+    <article>
+        <div id="image-div">
+            <img src="~/images/leftbuddha.svg" id="left-buddha" alt="Buddha Image" />
+            <img src="~/images/rightbuddha.svg" id="right-buddha" alt="Buddha Image" />
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+    </article>
 
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>

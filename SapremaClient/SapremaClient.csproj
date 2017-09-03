@@ -29,7 +29,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\audio\" />
+    <None Include="wwwroot\Uploads\MeditationAudio\8d967407-40d8-42ff-ba66-d3320bdce63f.mp3" />
+    <None Include="wwwroot\Uploads\MeditationImages\8d967407-40d8-42ff-ba66-d3320bdce63f.jpg" />
   </ItemGroup>
 
 </Project>

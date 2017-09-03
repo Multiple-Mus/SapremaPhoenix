@@ -22,7 +22,7 @@ namespace SapremaAPI.DAL
                 sapMeditation.MeditationTheme = meditation.MeditationTheme;
                 sapMeditation.MeditationCreator = meditation.MeditationCreator;
                 sapMeditation.MeditationType = meditation.MeditationType;
-                sapMeditation.MeditationImage = meditation.MeditationImage;
+                sapMeditation.MeditationDescription = meditation.MeditationDescription;
 
                 dbConn.SaveChanges();
             };
@@ -110,17 +110,44 @@ namespace SapremaAPI.DAL
         {
             using (var dbConn = new SapremaFinalContext())
             {
-                SapGroups sapGroups = dbConn.SapGroups.Where(a => a.GroupId == group.GroupId).FirstOrDefault();
+                SapGroups sapGroups = dbConn.SapGroups.Where(a => a.GroupId == group.GroupId && a.GroupAdmin == group.GroupAdmin).FirstOrDefault();
 
-                sapGroups.GroupName = group.GroupName;
-                sapGroups.GroupStatus = group.GroupStatus;
-                sapGroups.GroupDescription = group.GroupDescription;
-                sapGroups.GroupLevel = group.GroupLevel;
+                if (sapGroups == null)
+                {
+                    return false;
+                }
 
-                dbConn.SaveChanges();
-            };
+                else
+                {
+                    sapGroups.GroupName = group.GroupName;
+                    sapGroups.GroupStatus = group.GroupStatus;
+                    sapGroups.GroupDescription = group.GroupDescription;
+                    sapGroups.GroupLevel = group.GroupLevel;
+                    dbConn.SaveChanges();
+                    return true;
+                }
+            } 
+        }
 
-            return true;
+        public bool UpdateMeditationReview(SapReviewMeditation review)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                SapReviewMeditation sapReview = dbConn.SapReviewMeditation.Where(a => a.MeditationId == review.MeditationId && a.UserId == review.UserId).FirstOrDefault();
+
+                if (sapReview == null)
+                {
+                    return false;
+                }
+
+                else
+                {
+                    sapReview.ReviewStars = review.ReviewStars;
+                    sapReview.ReviewComment = review.ReviewComment;
+                    dbConn.SaveChanges();
+                    return true;
+                }
+            }
         }
     }
 }
