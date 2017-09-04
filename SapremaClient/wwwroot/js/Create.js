@@ -9,6 +9,7 @@ var finalList = "";
 var classList = [];
 var num = 0;
 
+
 function setupPage() {
     $('#pose-list').hide();
     $('#random-generate').hide();
@@ -104,7 +105,23 @@ $(function () {
     $('#class-pose').sortable();
 })
 
+
 function saveClass() {
+    url = urlMVC + "GetUserGroupsList";
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        contentType: "application/json;charset=utf-8"
+    }).done(function (data) {
+        saveClassModal(data);
+        //displayPoses(data);
+    }).error(function (jqXHR, textStatus, errorThrown) {
+        $('#store-items').text(jqXHR.responseText || textStatus);
+    });
+}
+function saveClassModal(data) {
+
     $('.modal-title').html('Enter Class Details');
     var modelBody = '<div class="form-group"><label for="ClassName">Class Name:</label>' +
         '<input type="text" class="form-control" id="ClassName"></div>' +
@@ -115,10 +132,21 @@ function saveClass() {
         '<div class="form-group"><label for="ClassDescription">Class Description:</label>' +
         '<input type="textbox" class="form-control" id="ClassDescription"></div>' +
         '<div class="form-group"><label for="ClassLevel">Class Level:</label>' +
-        '<select class="form-control" id="ClassLevel"><option>1</option><option>2</option><option>3</option></select></div>';
+        '<select class="form-control" id="ClassLevel"><option>1</option><option>2</option><option>3</option></select></div>' +
+        '<div class="form-group"><label for="ClassGroupId">Class Group:</label>' +
+        '<select class="form-control" id="ClassGroupId"><option val="">Select Group</option>';
+    for (var i = 0; i < data.length; i++) {
+        modelBody = modelBody + '<option value="' + data[i].GroupId + '">' + data[i].GroupName + '</option>';
+    }
+    modelBody = modelBody + '</select></div>';
+    console.log(data);
     $('.modal-body').html(modelBody);
     $('.modal-footer').html("<button type='button' class='btn btn-default button-medium' onclick='classDetailsSave()'>Save</button><button type='button' class='btn btn-default button-medium' data-dismiss='modal'>Close</button>");
     $('#myModal').modal("show");
+}
+
+function getGroups() {
+    
 }
 
 function classDetailsSave() {
@@ -128,7 +156,10 @@ function classDetailsSave() {
     var classLevel = $('#ClassLevel').val();
     var classTheme = $('#ClassTheme').val();
     var classDescription = $('#ClassDescription').val();
-    var classPlan = "{'ClassName':'" + className + "', 'ClassDescription':'" + classDescription + "','ClassTheme':'" + classTheme + "','ClassLevel':" + classLevel + ",'Poses' : ["
+    var classGroup = $('#ClassGroupId').val();
+    //var e = document.getElementById("ClassGroupId");
+    //var classGroup = e.options[e.selectedIndex].value;
+    var classPlan = "{'ClassName':'" + className + "', 'ClassDescription':'" + classDescription + "','ClassTheme':'" + classTheme + "','ClassLevel':" + classLevel + ",'ClassGroupId':'" + classGroup + "','Poses' : ["
     for (i = 0; i < childDivs.length; i++) {
         var childDiv = childDivs[i];
         if ($(childDivs[i]).hasClass("poseIn")) {

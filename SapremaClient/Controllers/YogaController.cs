@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Net.Http;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace SapremaClient.Controllers
 {
@@ -110,6 +114,82 @@ namespace SapremaClient.Controllers
             var content = await client.GetStringAsync(url);
 
             return content;
+        }
+
+        [Authorize]
+        public async Task<string> GetUserGroupsList()
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "usergroups/groups";
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        public async Task<string> GetClassPoses(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "userclass/poses/" + itemId;
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        public async Task<string> CheckClass(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "userclass/checkclass/" + itemId;
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        public async Task<string> GetReview(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "userclass/review/" + itemId;
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ReviewClass(string itemId, [FromBody] string value)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "userclass/review/" + itemId;
+            var stringContent = new StringContent(value, Encoding.UTF8, "application/json");
+            HttpResponseMessage responce = await client.PostAsync(url, stringContent);
+
+            return responce;
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<HttpResponseMessage> UpdateReviewClass(string itemId, [FromBody] string value)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "userclass/review/" + itemId;
+            var stringContent = new StringContent(value, Encoding.UTF8, "application/json");
+            HttpResponseMessage responce = await client.PutAsync(url, stringContent);
+
+            return responce;
         }
     }
 }

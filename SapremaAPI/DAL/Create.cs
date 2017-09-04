@@ -21,6 +21,25 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public bool JoinGroup(string userid, string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                SapUserGroups group = new SapUserGroups()
+                {
+                    UserGroupId = Guid.NewGuid(),
+                    UserId = userid,
+                    GroupId = id
+                };
+
+                dbConn.SapUserGroups.Add(group);
+                dbConn.SaveChanges();
+                return true;
+            }
+        }
+
         public bool CreateClass(ClassModel sequence)
         {
             sequence.ClassId = Guid.NewGuid();
@@ -35,7 +54,8 @@ namespace SapremaAPI.DAL
                     ClassLevel = sequence.ClassLevel,
                     ClassName = sequence.ClassName,
                     ClassTheme = sequence.ClassTheme,
-                    ClassCreatedOn = DateTime.Now
+                    ClassCreatedOn = DateTime.Now,
+                    ClassGroupId = sequence.ClassGroupId
                 };
 
                 dbConn.SapClass.Add(sClass);
@@ -66,6 +86,18 @@ namespace SapremaAPI.DAL
             {
                 meditationReview.ReviewMeditationId = Guid.NewGuid();
                 dbConn.SapReviewMeditation.Add(meditationReview);
+                dbConn.SaveChanges();
+
+                return true;
+            }
+        }
+
+        public bool CreateClassReview(SapReviewClass classReview)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                classReview.ReviewClassId = Guid.NewGuid();
+                dbConn.SapReviewClass.Add(classReview);
                 dbConn.SaveChanges();
 
                 return true;

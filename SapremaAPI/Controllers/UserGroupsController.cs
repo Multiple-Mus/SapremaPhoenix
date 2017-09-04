@@ -116,6 +116,31 @@ namespace SapremaAPI.Controllers
             return serializedGroups;
         }
 
+        [HttpGet("store", Name = "GetStoreGroups")]
+        public string GetStoreGroups()
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var groups = new Get().GetStoreGroups(userId);
+            var serializedGroups = JsonConvert.SerializeObject(groups);
+            return serializedGroups;
+        }
+
+        [HttpPost("join/{itemid}", Name = "JoinGroup")]
+        public bool JoinGroup(string itemid)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var success = new Create().JoinGroup(userId, itemid);
+            return success;
+        }
+
+        [HttpDelete("leave/{itemid}", Name = "LeaveGroup")]
+        public bool LeaveGroup(string itemid)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var success = new Delete().LeaveGroup(userId, itemid);
+            return success;
+        }
+
 
 
 

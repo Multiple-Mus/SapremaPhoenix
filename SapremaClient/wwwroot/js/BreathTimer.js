@@ -1,7 +1,7 @@
 ﻿var inhaleAudio = new Audio('../audio/inhale.mp3');
 var exhaleAudio = new Audio('../audio/exhale.mp3');
 var holdAudio = new Audio('../audio/hold.mp3');
-var audio = new Audio('../audio/ding.mp3');
+var audio = new Audio('../audio/ding.wav');
 
 var breathTime = [];    //seconds of each breath stage
 var timeInSecs;         //time left in stage

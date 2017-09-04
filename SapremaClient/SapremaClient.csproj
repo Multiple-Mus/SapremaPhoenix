@@ -29,8 +29,12 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Uploads\MeditationAudio\8d967407-40d8-42ff-ba66-d3320bdce63f.mp3" />
-    <None Include="wwwroot\Uploads\MeditationImages\8d967407-40d8-42ff-ba66-d3320bdce63f.jpg" />
+    <None Include="wwwroot\Uploads\8d967407-40d8-42ff-ba66-d3320bdce63f.mp3" />
+    <None Include="wwwroot\Uploads\8d967407-40d8-42ff-ba66-d3320bdce63f.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\MeditationAudio\" />
+    <Folder Include="wwwroot\Uploads\MeditationImages\" />
   </ItemGroup>
 
 </Project>

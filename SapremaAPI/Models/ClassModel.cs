@@ -13,6 +13,7 @@ namespace SapremaAPI.Models
         public int ClassLevel { get; set; }
         public string ClassTheme { get; set; }
         public string ClassDescription { get; set; }
+        public Guid ClassGroupId { get; set; }
         public List<PoseModel> Poses { get; set; }
     }
 }

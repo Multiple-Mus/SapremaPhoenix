@@ -9,11 +9,21 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text;
 using Microsoft.AspNetCore.Razor.CodeGenerators;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
 
 namespace SapremaClient.Controllers
 {
     public class MeditationController : Controller
     {
+        private IHostingEnvironment hostingEnv;
+
+        public MeditationController(IHostingEnvironment env)
+        {
+            this.hostingEnv = env;
+        }
+
         public string sapremaAPI = "http://localhost:5001/api/";
 
         /*
@@ -49,6 +59,23 @@ namespace SapremaClient.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UplaodFiles([FromBody] List<IFormFile> files, string itemId)
+        {
+            var uploads = Path.Combine(hostingEnv.WebRootPath, "Uploads");
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    using (var fileStream = new FileStream(Path.Combine(uploads, itemId), FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                }
+            }
+            return Ok();
+        }
+
         //[Authorize]
         //public IActionResult PlayMeditation()
         //{
@@ -58,9 +85,9 @@ namespace SapremaClient.Controllers
         /*
          * Methods for authorized API actions
          * */
-         /*
-          * Display the store for a user
-          * */
+        /*
+         * Display the store for a user
+         * */
         [Authorize]
         public async Task<string> GetShopList()
         {
@@ -69,6 +96,57 @@ namespace SapremaClient.Controllers
             client.SetBearerToken(accessToken);
             var url = sapremaAPI + "usermeditations/shopall";
             var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<HttpResponseMessage> UpdateMeditationAdmin(string itemId, [FromBody] string value)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "admin/meditation/" + itemId;
+            var stringContent = new StringContent(value, Encoding.UTF8, "application/json");
+            HttpResponseMessage responce = await client.PutAsync(url, stringContent);
+
+            return responce;
+        }
+
+        [Authorize]
+        public async Task<string> GetMeditationAdmin()
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "admin/meditation";
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        public async Task<string> GetMeditationDetailsAdmin(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "admin/" + itemId;
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task<HttpResponseMessage> DeleteMeditationAdmin(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "admin/meditation/" + itemId;
+            var content = await client.DeleteAsync(url);
 
             return content;
         }

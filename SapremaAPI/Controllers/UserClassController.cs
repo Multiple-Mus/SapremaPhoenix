@@ -58,6 +58,76 @@ namespace SapremaAPI.Controllers
             return seralizedClasses;
         }
 
+        [HttpGet("poses/{itemid}", Name = "GetClassPoses")]
+        public string GetClassPoses(string itemid)
+        {
+            //var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var poses = new Get().GetClassPoses(itemid);
+            var seralizedClasses = JsonConvert.SerializeObject(poses);
+            return seralizedClasses;
+        }
 
+        [HttpGet("checkclass/{itemid}", Name = "CheckClass")]
+        public string CheckClass(string itemid)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var result = new Get().CheckClass(userId, itemid);
+            if (result == true)
+            {
+                return "true";
+            }
+            
+            else
+            {
+                return "false";
+            }
+        }
+
+        [HttpGet("review/{itemid}", Name = "GetClassReview")]
+        public string GetClassReview(string itemid)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            var success = new Get().GetSingleUserReview(userId, itemid);
+            var serializedSuccess = JsonConvert.SerializeObject(success);
+            return serializedSuccess;
+        }
+
+        [HttpPost("review/{itemid}", Name = "CreateClassReview")]
+        public IActionResult CreateClassReview(string itemid, [FromBody] SapReviewClass review)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            review.UserId = userId;
+            review.ClassId = Guid.Parse(itemid);
+            var success = new Create().CreateClassReview(review);
+
+            if (success == true)
+            {
+                return Ok();
+            }
+
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("review/{itemid}", Name = "UpdateClassReview")]
+        public IActionResult UpdateClassReview(string itemid, [FromBody] SapReviewClass review)
+        {
+            var userId = User.Claims.Where(a => a.Type == "sub").Select(b => b.Value).ToArray().First();
+            review.UserId = userId;
+            review.ClassId = Guid.Parse(itemid);
+            var success = new Update().UpdateClassReview(review);
+
+            if (success == true)
+            {
+                return Ok();
+            }
+
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

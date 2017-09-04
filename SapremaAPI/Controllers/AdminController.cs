@@ -87,6 +87,15 @@ namespace SapremaAPI.Controllers
          * Meditation admninstration section
          * */
 
+
+        [HttpGet("meditation", Name = "GetMeditationAdmin")]
+        public string GetMeditationAdmin()
+        {
+            var meditationList = new Get().GetAllMeditations();
+            var seralizedMeditationList = JsonConvert.SerializeObject(meditationList);
+            return seralizedMeditationList;
+        }
+
         /// <summary>
         /// Add a meditation
         /// </summary>
@@ -99,16 +108,24 @@ namespace SapremaAPI.Controllers
             return success;
         }
 
+        [HttpGet("{id}")]
+        public string GetSingleMeditation(string id)
+        {
+            var meditation = new Get().GetSingleMeditation(id);
+            var serializedMeditation = JsonConvert.SerializeObject(meditation);
+            return serializedMeditation;
+        }
+
         /// <summary>
         /// Update a meditation
         /// </summary>
         /// <param name="value">JSON of meditation being updated</param>
         [HttpPut("meditation/{id}", Name = "UpdateMeditation")]
-        public bool EditMeditation(Guid id, [FromBody] string value)
+        public bool EditMeditation(Guid id, [FromBody] SapMeditations value)
         {
-            var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
-            meditation.MeditationId = id;
-            var success = new Update().UpdateMeditation(meditation);
+           // var meditation = JsonConvert.DeserializeObject<SapMeditations>(value);
+            value.MeditationId = id;
+            var success = new Update().UpdateMeditation(value);
             return success;
         }
 

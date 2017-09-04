@@ -1,4 +1,4 @@
-﻿var url = "http://localhost:5002/Meditation/";
+﻿var urlMVC = "http://localhost:5002/Meditation/";
 var urlapi = "http://localhost:5001/api/admin/"
 
 $('#uploadMeditation').on('click', function () {
@@ -56,9 +56,6 @@ function uploadMeditation() {
     var MeditationTheme = "'" + $('#MeditationTheme').val() + "'";
     var MeditationCreator = "'" + $('#MeditationCreator').val() + "'";
     var MeditationType = "'" + $('#MeditationType').val() + "'";
-
-
-
     var value = '"{MeditationName:' + MeditationName +
         ',MeditationDescription:' + MeditationDescription +
         ',MeditationTheme:' + MeditationTheme +
@@ -75,11 +72,12 @@ function uploadMeditation() {
         contentType: "application/json;charset=utf-8",
         data: value,
         success: function (data, txtStatus, xhr) {
-             uploadMedia()
-             //clearForm();
+            //uploadMedia()
+            clearForm();
             //location.reload();
-             //setupPage();
+            setupPage();
             $('#success-message').html("<span class='success'>Meditation Uploaded</span>");
+            //setupModal()
 
         },
         error: function (xhr, txtStatus, errorThrown) {
@@ -92,35 +90,27 @@ function uploadMeditation() {
 function uploadMedia()
 {
 
-    var apiurl = urlapi + "media";
+    var url = urlMVC + "UploadFiles?itemId=dhfjkshdfksdhfksdjhfskjdfhsk";
 
-    var fileUpload = $("#MeditationImage").get(0);
-
+    var fileUpload = $("#files").get(0);
     var files = fileUpload.files;
-
-    var fileData = new FormData(); 
-
-    fileData.append(files);
-
+    var data = new FormData();
+    for (var i = 0; i < files.length; i++) {
+        data.append(files[i].name, files[i]);
+    }
     $.ajax({
         type: "POST",
-        url: apiurl,
-        contentType: false, // Not to set any content header  
-        processData: false, // Not to process data  
-        data: fileData,
-        success: function (data, txtStatus, xhr) {
-            uploadMedia()
-            //clearForm();
-            //location.reload();
-            //setupPage();
-            $('#success-message').html("<span class='success'>Meditation Uploaded</span>");
-
+        url: url,
+        contentType: false,
+        processData: false,
+        data: data,
+        success: function (message) {
+            alert(message);
         },
-        error: function (xhr, txtStatus, errorThrown) {
-            console.log('error');
+        error: function () {
+            alert("There was error uploading files!");
         }
     });
-
 }
 
 function clearForm() {
@@ -132,7 +122,7 @@ function clearForm() {
 }
 
 function deleteModal(id) {
-    $('.modal-title').append("Delete Group");
+    $('.modal-title').html("Delete Group");
     $('.modal-body').append("Are you sure you want to delete group:<br>" + $('#MeditationName').val());
     $('.modal-footer').append('<button type="button" class="btn btn-default" id="deleteConfermation" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
     $('#deleteConfermation').attr("onclick", "deleteGroup('" + id + "')");
@@ -142,9 +132,10 @@ function deleteModal(id) {
 function setupPage() {
     //$('#updateGroup').hide();
     //$('#delete-button').hide();
+    url = urlMVC + "GetMeditationAdmin"
     $.ajax({
         type: "GET",
-        url: 'http://localhost:5001/api/meditation',
+        url: url,
         dataType: 'json',
     }).done(function (data) {
         $('#group-list').html("");
@@ -154,17 +145,20 @@ function setupPage() {
             JSON.stringify(data[i])
         }
         $('#group-name-error').hide();
+        $('#updateGroup').hide();
+        $('#delete-button').hide();
+        $('#uploadMeditation').show();
     }).error(function (jqXHR, textStatus, errorThrown) {
         $('#group-list').text(jqXHR.responseText || textStatus);
     });
 }
 
 function deleteGroup(id) {
-    var apiurl = "http://localhost:5001/api/admin/meditation/" + id;
+    var url = urlMVC + "DeleteMeditationAdmin?itemId=" + id;
     console.log("this is some text");
     $.ajax({
         type: "DELETE",
-        url: apiurl,
+        url: url,
         contentType: "text/json",
         success: function (data, txtStatus, xhr) {
             //console.log(data);
@@ -187,16 +181,10 @@ function deleteGroup(id) {
 
 
 function editGroup(id) {
-
-    //console.log(id);
-    //$('#createGroup').hide();
-    //$('#updateGroup').show();
-    //$('success-message').html("");
-
-    var apiurl = "http://localhost:5001/api/meditation/" + id;
+    var url = urlMVC + "GetMeditationDetailsAdmin?ItemId=" + id;
     $.ajax({
         type: "GET",
-        url: apiurl,
+        url: url,
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
     }).done(function (data) {
@@ -211,6 +199,8 @@ function editGroup(id) {
         $('#success-message').html("");
         deleteModal(data['MeditationId']);
         $('#delete-button').show();
+        $('#updateGroup').show();
+        $('#uploadMeditation').hide();
     })
 }
 
@@ -240,11 +230,11 @@ function update(id) {
         ',MeditationType:' + MeditationType + '}"';
 
     console.log(id);
-    var apiurl = "http://localhost:5001/api/admin/meditation/" + id;
-    console.log(apiurl);
+    var url = urlMVC + "UpdateMeditationAdmin?itemId=" + id;
+    //console.log(apiurl);
     $.ajax({
         type: "PUT",
-        url: apiurl,
+        url: url,
         contentType: "text/json",
         data: value,
         success: function (data, txtStatus, xhr) {

@@ -44,9 +44,27 @@ namespace SapremaClient.Controllers
             return View();
         }
 
+        [Authorize]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
         /*
          * Methods dealing with group creation
          * */
+
+        [Authorize]
+        public async Task<string> GetStoreList()
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var url = sapremaAPI + "usergroups/store";
+            var content = await client.GetStringAsync(url);
+
+            return content;
+        }
 
         [HttpGet]
         [Authorize]
@@ -71,6 +89,33 @@ namespace SapremaClient.Controllers
             var url = sapremaAPI + "usergroups/groups/"; // Build API URL
             var stringContent = new StringContent(value, Encoding.UTF8, "application/json"); // Set as Http request parameter
             HttpResponseMessage response = await client.PostAsync(url, stringContent); // Contact APi with token and Http content
+
+            return response;
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<HttpResponseMessage> JoinGroup(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token"); // Get user access token
+            var client = new HttpClient(); // Created new Http Client instance
+            client.SetBearerToken(accessToken); // Add token to this instance
+            var url = sapremaAPI + "usergroups/join/" + itemId; // Build API URL
+            var stringContent = new StringContent("", Encoding.UTF8, "application/json"); // Set as Http request parameter
+            HttpResponseMessage response = await client.PostAsync(url, stringContent); // Contact APi with token and Http content
+
+            return response;
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<HttpResponseMessage> LeaveGroup(string itemId)
+        {
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token"); // Get user access token
+            var client = new HttpClient(); // Created new Http Client instance
+            client.SetBearerToken(accessToken); // Add token to this instance
+            var url = sapremaAPI + "usergroups/leave/" + itemId; // Build API URL
+            HttpResponseMessage response = await client.DeleteAsync(url);
 
             return response;
         }

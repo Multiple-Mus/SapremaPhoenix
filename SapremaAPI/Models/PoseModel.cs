@@ -10,5 +10,6 @@ namespace SapremaAPI.Models
         public string PoseId { get; set; }
         public int PoseLength { get; set; }
         public int PoseSequence { get; set; }
+        public string PoseName { get; set; }
     }
 }

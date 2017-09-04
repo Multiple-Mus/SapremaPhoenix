@@ -19,7 +19,9 @@
         <img id="play-class-image" class="img-responsive center-block" width="25%" src="../images/logo.svg" /><br />
         <p class="player-text" id="class-text"></p>
         <div>
-            <input id="vol-control" type="range" min="0" max="100" step="1" width="100px" value="100" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-5"><input id="vol-control" type="range" min="0" max="100" step="1" value="100" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input></div>
+            </div> 
             <a href="javascript:void(0)" onclick="hideDisplay()" id="stop-button"><p class="fa fa-stop-circle-o" aria-hidden="true"></p></a>
         </div>
     </div>

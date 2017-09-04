@@ -7,7 +7,7 @@
 <hr class="heading-rule" />
 <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2" id="group-list">
     <h4>Meditations</h4>
-    <div class="name-search">
+    @*<div class="name-search">
         <div>
             <label for="MeditationName">Meditation Name</label>
             <input type="text" class="form-control" id="MeditationSearch" />
@@ -15,12 +15,11 @@
         <div class="search-button text-center">
             <button class="btn btn-default button-medium" id="searchMeditations"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
         </div>
-    </div>
+    </div>*@
     <div id="meditation-list">
         <!--
         *************** Code below is for AJAX
         -->
-        <span class='list-span'>this is the meditation name<button onclick="" class="btn btn-default button-medium" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></span><hr /><br>
     </div>
 </div>
 
@@ -31,8 +30,9 @@
     </div>
 
     <div class="form-group">
+        <label for="MeditationName">Meditation Name</label>
         <div class="error-input">
-            <label for="MeditationName">Meditation Name</label><span class="error" id="meditation-error1" display="none">Please enter a name!</span>
+            <div class="error" id="meditation-error1" display="none">Please enter a name!</div>
         </div>
         <input type="text" class="form-control" id="MeditationName" placeholder="Mediation Name" required>
 
@@ -42,33 +42,29 @@
         <textarea class="form-control" id="MeditationDescription" rows="3" placeholder="Meditation Description"></textarea>
     </div>
     <div class="form-group">
+        <label for="MeditationTheme">Meditation Theme</label>
         <div class="error-input">
-            <label for="MeditationTheme">Meditation Theme</label><span class="error" id="meditation-error2" display="none">Please enter a theme!</span>
+            <div class="error" id="meditation-error2" display="none">Please enter a theme!</div>
         </div>
         <input type="text" class="form-control" id="MeditationTheme" placeholder="Mediation Theme">
     </div>
     <div class="form-group">
+        <label for="MeditationCreator">Meditation Creator</label>
         <div class="error-input">
-            <label for="MeditationCreator">Meditation Creator</label><span class="error" id="meditation-error3" display="none">Please enter a creator!</span>
+            <div class="error" id="meditation-error3" display="none">Please enter a creator!</div>
         </div>
         <input type="text" class="form-control" id="MeditationCreator" placeholder="Mediation Creator">
     </div>
     <div class="form-group">
+        <label for="MeditationType">Meditation Type</label>
         <div class="error-input">
-            <label for="MeditationType">Meditation Type</label><span class="error" id="meditation-error4" display="none">Please enter a type!</span>
+            <div class="error" id="meditation-error4" display="none">Please enter a type!</div>
         </div>
         <input type="text" class="form-control" id="MeditationType" placeholder="Meditation Type">
     </div>
     <div class="form-group">
-        <label for="MeditationImage">Meditation Image</label>
-        <input type="file" class="form-control" id="MeditationImage" accept="image/*">
-        <div id="meidtationImageDisplay"><img src="~/images/buddha.svg" /></div>
-    </div>
-    <div class="form-group">
-        <div class="error-input">
-            <label for="MeditationAudio">Meditation Audio</label><span class="error" id="meditation-error5" display="none">Please upload a file!</span>
-        </div>
-        <input type="file" class="form-control" id="MeditationAudio" required>
+        <label for="files">Meditation Files</label>
+        <input type="file" class="form-control" id="files" multiple>
     </div>
     <button class="btn btn-default" id="uploadMeditation" type="button">Upload</button>
     <button class="btn btn-default" id="updateGroup">Update</button>

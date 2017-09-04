@@ -29,7 +29,8 @@ a:visited {
 }
 
 #vol-control {
-    padding-left: 300px;
+    /*padding-left: 300px;*/
+    width: 300px;
 }
 
 a:hover {

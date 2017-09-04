@@ -29,6 +29,19 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public bool LeaveGroup (string userId, string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var group = dbConn.SapUserGroups.Where(a => a.UserId == userId && a.GroupId == id).SingleOrDefault();
+                dbConn.SapUserGroups.Remove(group);
+                dbConn.SaveChanges();
+                return true;
+            }
+        }
+
         public bool DeleteMeditationReview(string meditationReviewId)
         {
             var id = Guid.Parse(meditationReviewId);

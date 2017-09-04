@@ -111,6 +111,43 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public List<GroupStore> GetStoreGroups(string id)
+        {
+            List<GroupStore> groupStore = new List<GroupStore>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var storeList = dbConn.SapGroups.Where(a => a.GroupStatus != true && a.GroupAdmin != id).ToList();
+
+                foreach(var record in storeList)
+                {
+                    bool status;
+                    var groupJoined = dbConn.SapUserGroups.Where(a => a.GroupId == record.GroupId && a.UserId == id).FirstOrDefault();
+                    if (groupJoined == null)
+                    {
+                        status = false;
+                    }
+                    else
+                    {
+                        status = true;
+                    }
+
+                    GroupStore gModel = new GroupStore()
+                    {
+                        GroupId = record.GroupId,
+                        GroupLevel = record.GroupLevel,
+                        GroupAdmin = new Get().GetUserName(record.GroupAdmin),
+                        GroupJoined = status,
+                        GroupName = record.GroupName
+                    };
+
+                    groupStore.Add(gModel);
+                }
+
+                return groupStore;
+            }
+        }
+
         public List<UserMeditationsModel> GetUserListMeditations(string id)
         {
             List<UserMeditationsModel> userMeditationsModel = new List<UserMeditationsModel>();
@@ -656,10 +693,78 @@ namespace SapremaAPI.DAL
             }
         }
 
+        public List<PoseModel> GetClassPoses(string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            List<PoseModel> poses = new List<PoseModel>();
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                List<SapClassPoses> list = dbConn.SapClassPoses.Where(a => a.ClassId == id).OrderBy(a => a.SequenceNumber).ToList();
+
+                foreach (var record in list)
+                {
+                    PoseModel pModel = new PoseModel()
+                    {
+                        PoseId = record.PoseId,
+                        PoseLength = record.PoseTime,
+                        PoseName = new Get().GetPoseName(record.PoseId),
+                        PoseSequence = record.SequenceNumber
+                    };
+
+                    poses.Add(pModel);
+                }
+
+                return poses;
+            }
+        }
+
+        public bool CheckClass(string userId, string itemId)
+        {
+            var id = Guid.Parse(itemId);
+
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var classCheck = dbConn.SapClass.Where(a => a.ClassCreatedBy == userId && a.ClassId == id).FirstOrDefault();
+
+                SapClassComplete cComplete = new SapClassComplete()
+                {
+                    UserId = userId,
+                    ClassId = id,
+                    ClassCompletedOn = DateTime.Now,
+                    ClassCompleteId = Guid.NewGuid()
+                };
+
+                dbConn.SapClassComplete.Add(cComplete);
+                dbConn.SaveChanges();
+
+                if (classCheck != null)
+                {
+                    return true;
+                }
+
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
 
         /*
          * Helper get methods below
          * */
+
+        public string GetPoseName (string poseId)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                var name = dbConn.SapPoses.Where(a => a.PoseId == poseId).FirstOrDefault();
+                var poseName = name.PoseName;
+                return poseName;
+            }
+        }
 
         /*
          * Get the type of review, used only on this sheet for getting user reviews

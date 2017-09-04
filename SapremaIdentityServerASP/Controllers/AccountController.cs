@@ -113,6 +113,13 @@ namespace SapremaIdentityServerASP.Controllers
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ConfirmEmailLink()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -135,9 +142,10 @@ namespace SapremaIdentityServerASP.Controllers
                         $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    return View("ConfirmEmailLink");
                 }
-                AddErrors(result);
+                //AddErrors(result);
+                return View("ConfirmEmailLink");
             }
 
             // If we got this far, something failed, redisplay form

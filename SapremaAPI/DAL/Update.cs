@@ -149,5 +149,26 @@ namespace SapremaAPI.DAL
                 }
             }
         }
+
+        public bool UpdateClassReview(SapReviewClass review)
+        {
+            using (var dbConn = new SapremaFinalContext())
+            {
+                SapReviewClass sapReview = dbConn.SapReviewClass.Where(a => a.ClassId == review.ClassId && a.UserId == review.UserId).FirstOrDefault();
+
+                if (sapReview == null)
+                {
+                    return false;
+                }
+
+                else
+                {
+                    sapReview.ReviewStars = review.ReviewStars;
+                    sapReview.ReviewComment = review.ReviewComment;
+                    dbConn.SaveChanges();
+                    return true;
+                }
+            }
+        }
     }
 }
