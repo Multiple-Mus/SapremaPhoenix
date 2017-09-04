@@ -207,6 +207,8 @@ function sendSaveClass(value) {
             $('#class-pose').html("");
             $('#myModal').modal("hide");
             $('#success').show();
+            remove("classShav");
+            remove("classPran");
         },
         error: function (xhr, txtStatus, errorThrown) {
             console.log('error');

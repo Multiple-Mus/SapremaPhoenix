@@ -44,24 +44,24 @@ function displayPoses(data) {
 }
 
 function updatePoseStatus(id) {
-    var apiurl;
+    var url;
     var methodCall;
     var itemId = "#p" + id;
     var type;
 
     if ($("#p" + id).prop('checked') !== true) {
-        apiurl = urlMVC + "OmitPose/?itemId=" + id;
-        type = "PUT";
+        url = urlMVC + "OmitPose?itemId=" + id;
+        type = "POST";
     }
 
     else {
-        apiurl = urlMVC + "IncludePose/?itemId=" + id;
+        url = urlMVC + "IncludePose?itemId=" + id;
         type = "DELETE";
     }
 
     $.ajax({
         type: type,
-        url: apiurl,
+        url: url,
         data: id,
         dataType: 'json',
         contentType: "application/json;charset=utf-8"

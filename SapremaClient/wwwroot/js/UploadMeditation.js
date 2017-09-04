@@ -122,9 +122,9 @@ function clearForm() {
 }
 
 function deleteModal(id) {
-    $('.modal-title').html("Delete Group");
-    $('.modal-body').append("Are you sure you want to delete group:<br>" + $('#MeditationName').val());
-    $('.modal-footer').append('<button type="button" class="btn btn-default" id="deleteConfermation" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+    $('.modal-title').html("Delete Meditation");
+    $('.modal-body').html("Are you sure you want to delete meditation:<br>" + $('#MeditationName').val());
+    $('.modal-footer').html('<button type="button" class="btn btn-default" id="deleteConfermation" data-dismiss="modal">Delete</button><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
     $('#deleteConfermation').attr("onclick", "deleteGroup('" + id + "')");
 }
 

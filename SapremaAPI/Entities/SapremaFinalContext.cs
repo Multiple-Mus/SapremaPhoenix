@@ -180,9 +180,9 @@ namespace SapremaAPI.Entities
                     .IsRequired()
                     .HasMaxLength(450);
 
-                entity.HasOne(d => d.ClassComplete)
-                    .WithOne(p => p.SapClassComplete)
-                    .HasForeignKey<SapClassComplete>(d => d.ClassCompleteId)
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.SapClassComplete)
+                    .HasForeignKey(d => d.ClassId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Sap_ClassComplete_Sap_Class");
 
@@ -329,6 +329,8 @@ namespace SapremaAPI.Entities
                 entity.Property(e => e.MeditationCreator)
                     .IsRequired()
                     .HasMaxLength(256);
+
+                entity.Property(e => e.MeditationDescription).IsRequired();
 
                 entity.Property(e => e.MeditationName)
                     .IsRequired()

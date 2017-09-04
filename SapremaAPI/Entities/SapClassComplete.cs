@@ -10,7 +10,7 @@ namespace SapremaAPI.Entities
         public string UserId { get; set; }
         public DateTime ClassCompletedOn { get; set; }
 
-        public virtual SapClass ClassComplete { get; set; }
+        public virtual SapClass Class { get; set; }
         public virtual AspNetUsers User { get; set; }
     }
 }

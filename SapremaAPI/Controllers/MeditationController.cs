@@ -52,11 +52,13 @@ namespace SapremaAPI.Controllers
         //    return seralizedMeditationList;
         //}
 
-        /// <summary>
-        /// Get single meditation
-        /// </summary>
-        /// <param name="id">Meditation Id</param>
-        /// <returns>Details of a single meditation</returns>
+        [HttpGet("{id}", Name = "GetSingleMeditationDetails")]
+        public string GetSingleMeditationDetails(string id)
+        {
+            var meditation = new Get().GetSingleMeditation(id);
+            var serializedMeditation = JsonConvert.SerializeObject(meditation);
+            return serializedMeditation;
+        }
         
 
         /// <summary>

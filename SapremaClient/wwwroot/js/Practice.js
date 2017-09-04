@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     setupPageUser();
-    //setupPageGroup()
+    setupPageGroup()
 });
 
 var urlMVC = "http://localhost:5002/Yoga/";
@@ -38,17 +38,34 @@ function setupPageGroup() {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
     }).done(function (data) {
-        displayUserClasses(data);
+        displayubbedClasses(data);
     }).error(function (jqXHR, textStatus, errorThrown) {
         $('.meditaiton-list').text(jqXHR.responseText || textStatus);
     });
 }
 
 function SetVolume(val) {
-    audio.volume = val / 100;
+    classAudio.volume = val / 100;
 }
 
 function displayUserClasses(data) {
+    var listItem = "";
+    var classList = "";
+
+    for (var i = 0; i < data.length; i++) {
+        var buttonClick = "'" + data[i].ClassId + "'";
+
+        listItem = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">' + data[i].ClassName +
+            '<br />Theme:' + data[i].ClassTheme + '<br />Level:' + data[i].ClassLevel +
+            '</div><div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 store-rating">' +
+            '</div><div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center store-details"><button class="btn btn-default button-medium" onclick="playClass(' + buttonClick + ')"><i class="fa fa-info" aria-hidden="true"></i> Play</button>' +
+            '</div></div><hr />';
+        classList = classList + listItem;
+    }
+    $('#userclasses').html(classList);
+}
+
+function displayubbedClasses(data) {
     var listItem = "";
     var classList = "";
 
@@ -118,6 +135,8 @@ function poseDisplay() {
         audioLink = "../audio/pose/" + classPlan[p].PoseId + ".wav";
         imageLink = "../images/poses/" + classPlan[p].PoseId + ".svg";
         classAudio = new Audio(audioLink);
+        var tempVol = document.getElementById('vol-control').value;
+        classAudio.volume = tempVol / 100;
         classAudio.play();
         document.getElementById("play-class-image").src = imageLink;
     }
@@ -188,10 +207,10 @@ function reviewModelContent(comment, rating, itemId) {
         '</fieldset></div ><div class="row"><textarea rows="4" cols="50" id="reviewComment" placeholder="comment"></textarea></div>';
 
     if (comment == "" && rating == 0) {
-        $('.modal-footer').html("<button type='button' class='btn btn-default button-medium' onclick='reviewClass(" + buttonClick + ")'>Review</button><button type='button' class='btn btn-default button-medium' data-dismiss='modal'>Close</button>");
+        $('.modal-footer').html("<button type='button' class='btn btn-default button-medium' onclick='reviewClass(" + buttonClick + ")'>Review</button><button type='button' class='btn btn-default button-medium' onclick'hideDisplay()' data-dismiss='modal'>Close</button>");
     }
     else {
-        $('.modal-footer').html("<button type='button' class='btn btn-default button-medium' onclick='updateReview(" + buttonClick + ")'>Update</button><button type='button' class='btn btn-default button-medium' data-dismiss='modal'>Close</button>");
+        $('.modal-footer').html("<button type='button' class='btn btn-default button-medium' onclick='updateReview(" + buttonClick + ")'>Update</button><button type='button' class='btn btn-default button-medium' onclick'hideDisplay()' data-dismiss='modal'>Close</button>");
     }
     if (rating !== 0) {
         var roundedRating = Math.round(rating);
@@ -200,12 +219,12 @@ function reviewModelContent(comment, rating, itemId) {
         modelBody = modelBody.replace(ratingStar, ratingShow);
     }
     $('.modal-body').html(modelBody);
-    $('.modal-title').html("Review Meditation");
+    $('.modal-title').html("Review Class");
     $('#myModal').modal("show");
     $('#reviewComment').val(comment);
 }
 
-function reviewMeditation(itemId) {
+function reviewClass(itemId) {
     var url = urlMVC + "ReviewClass?itemId=" + itemId;
     var ReviewStars = $('input[name=rating]:checked').val();
     var ReviewComment = "'" + $('#reviewComment').val() + "'";
@@ -218,7 +237,7 @@ function reviewMeditation(itemId) {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
     }).done(function (data) {
-        $('#myModal').modal('hide');
+        hideDisplay();
     }).error(function (jqXHR, textStatus, errorThrown) {
         $('.meditaiton-list').text(jqXHR.responseText || textStatus);
     });
@@ -237,7 +256,7 @@ function updateReview(itemId) {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
     }).done(function (data) {
-        $('#myModal').modal('hide');
+        hideDisplay();
     }).error(function (jqXHR, textStatus, errorThrown) {
         $('.meditaiton-list').text(jqXHR.responseText || textStatus);
     });

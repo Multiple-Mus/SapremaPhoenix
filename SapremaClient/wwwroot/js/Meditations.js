@@ -50,8 +50,8 @@ function playMeditation(itemId, meditationName) {
     var url = urlMVC + "PlayMeditation?itemId=" + itemId;
     var audioLink = '../Uploads/MeditationAudio/' + itemId + '.mp3';
     var imageLink = '../Uploads/MeditationImages/' + itemId + '.jpg';
-    //meditationAudio = new Audio(audioLink);
-    meditationAudio = new Audio("../audio/ding.mp3");
+    meditationAudio = new Audio(audioLink);
+    //meditationAudio = new Audio("../audio/ding.mp3");
     meditationAudio.play();
     document.getElementById("meditation-display").style.backgroundColor = "rgba(121,134,203, 0.9)";
     document.getElementById("play-meditation-image").src = imageLink;
